@@ -21,34 +21,44 @@ class GuestController extends Controller
             $session->save();
         }
 
-        return view("guest.home", ['products' => Product::latest()->get(), 'categories' => Category::all()]);
+
+        return view("guest.home", ['products' => Product::latest()->get()]);
     }
 
     public function product(Product $product)
     {
-        return view("guest.product", ['product' => $product , 'categories' => Category::all()]);
+        return response()->json($product->load('images'));
+
+        //return view("guest.product", ['product' => $product, 'categories' => Category::all()]);
     }
 
-    public function brand(ProductBrand $brand,$name){
-$brand->load('products');
+    public function brand(ProductBrand $brand, $name = null)
+    {
 
+        $brand->load('products.images');
 
-        return view("guest.brand" ,['brand' => $brand]);
+        return response()->json($brand);
+
+       // return view("guest.brand", ['brand' => $brand]);
     }
 
     public function category(category $category, $name = null)
     {
-        return view("guest.category", ['category' => $category , 'categories'=> Category::all()]);
+        return response()->json(['category' => $category->load('products')]);
+
+       // return view("guest.category", ['category' => $category, 'categories' => Category::all()]);
     }
 
     public function search(Request $request)
     {
         $product = $request->q;
 
-        $products = Product::where("title" , "like" , "%$product%")->get();
+        $products = Product::where("title", "like", "%$product%")->get();
 
-        return view("guest.home" , ['products'=> $products]);
+        $products->load('images');
+
+        return response()->json($products);
+
+        //return view("guest.home", ['products' => $products]);
     }
-
-
 }

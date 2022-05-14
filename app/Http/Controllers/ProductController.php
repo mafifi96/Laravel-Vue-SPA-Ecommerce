@@ -37,8 +37,8 @@ class ProductController extends Controller
 
         $brands = DB::select('select id,name from product_brand');
 
-
         return view("admin.layouts.product.create" , ['categories'=>$categories , 'brands' => $brands]);
+
     }
 
     /**

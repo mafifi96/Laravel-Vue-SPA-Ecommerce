@@ -12,9 +12,11 @@
                 </li>
 
                 @ifadmin
+
                 <li class="nav-item">
                     <a class="nav-link" href="/dashboard">Dashboard</a>
                 </li>
+
                 @endif
 
 
@@ -54,7 +56,7 @@
                 <li class="nav-item">
                     <a class="nav-link cart" href="/cart"><i class="fas fa-shopping-cart"></i>
                         <span id="cart" style="
-        @if(session()->has('cart_quantity') && session('cart_quantity') != 0)   
+        @if(session()->has('cart_quantity') && session('cart_quantity') != 0)
         {{"display:block"}}
         @else
         {{"display:none"}}
@@ -99,4 +101,4 @@
                     </ul>
                 </div>
             </div>
-        
+

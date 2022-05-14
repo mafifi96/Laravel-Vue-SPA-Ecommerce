@@ -1,19 +1,46 @@
 <?php
 
+use App\Http\Controllers\CheckerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Category;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\GuestController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/session', function () {
+    $session = session()->getId();
+return response()->json(['message' => $session]);
+});
+
+Route::post('/checkAuth', [CheckerController::class , 'Check']);
+/*Route::get('/categories', function () {
+    return collect(Category::all('id','name'));
+});*/
+
+Route::apiResource('products' , ProductController::class);
+Route::apiResource('categories' , CategoryController::class);
+Route::get('/brand/{brand}', [GuestController::class , 'brand'])->where(['brand'=>'[0-9]+']);
+Route::post("/login" , [AuthenticatedSessionController::class , 'store']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('logout');
+Route::get("/search" , [GuestController::class , 'search']);
+Route::get("/cart" , [CartController::class , 'index']);
+Route::post("/cart/add" , [CartController::class , 'add']);
+Route::post("/cart/quantity" , [CartController::class , 'cart_quantity']);
+Route::post("/cart/delete" , [CartController::class , 'destroy']);
+//Route::get('/checkout', [UserController::class , 'checkout']);
+Route::post('/customer/info', [UserController::class , 'customer_info']);
+//Route::get("/search" , [GuestController::class , 'search']);
+//Route::get('/admin/categories',[CategoryController::class , 'index']);

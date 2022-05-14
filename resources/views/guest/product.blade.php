@@ -24,8 +24,8 @@
 
                         <p style="font-weight:800;color:#000;">&dollar;{{$product->price}}</p>
                         <p style="font-weight:400;color:#000;">Brand - <a href="/brand/{{$product->brand->id}}/{{$product->brand->name}}">{{$product->brand->name}}</a></p>
-                        
-                        
+
+
                         <div class="pro-desc p-2">
                             {!! $product->description !!}
                         </div>
@@ -37,7 +37,7 @@
                                 <div class="row">
                                     <div class="col-md-8 justify-content-">
                                         <div class="form-group">
-                                            
+
                                                         <input type="number" class="form-control" name="quantity"
                                                             placeholder="in stock {{$product->quantity}}" value="" max="{{$product->quantity}}" required>
                                         </div>
@@ -59,5 +59,6 @@
         </div>
     </div>
 </div>
+
 </main>
 @endsection

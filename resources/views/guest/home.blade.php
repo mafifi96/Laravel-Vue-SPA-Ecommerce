@@ -14,7 +14,7 @@
 
                     @forelse ($products as $product )
                     <div class="col-md-12 col-sm-12 col-lg-6 mb-3 ">
-                        
+
 
                         <div class="product mb-2 shadow-sm j">
                             <div class="pro-header mb-1">
@@ -62,8 +62,9 @@
         </div>
     </div>
 
-    
+
 </div>
+
 </div>
 </div>
 </main>

@@ -29,18 +29,19 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $sessions['notloged'] = session()->getId();
-        
+        //$sessions['notloged'] = session()->getId();
+
+
         $request->authenticate();
 
-        $user = Cart::where("session_id" , $sessions['notloged'])
+        /*$user = Cart::where("session_id" , $sessions['notloged'])
         ->update([
                 'user_id' => Auth::id()
         ]);
-
+*/
         //$request->session()->regenerate();
 
-        return RouteServiceProvider::redirectAuth();
+        return response()->json(['user' => Auth::user()]);
     }
 
     /**
@@ -51,12 +52,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+        Auth::guard('api')->logout();
+
+        //Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return response(200);
+        //return redirect('/');
     }
 }

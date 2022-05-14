@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{asset("css/bootstrap.min.css")}}">
     <link rel="stylesheet" href="{{asset("css/sb-admin-2.min.css")}}">
 
+
     <title>@yield('title')</title>
 
 </head>

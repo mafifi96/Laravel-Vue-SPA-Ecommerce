@@ -8,10 +8,16 @@ use App\Http\Controllers\GuestController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 
+Route::get('/{any}', function()
+{
+return view("app");
+}
+)->where('any','.*');
+
 Route::get('/', [GuestController::class , 'index']);
 Route::get('/product/{product}', [GuestController::class , 'product']);
 Route::get('/category/{category}/{name}', [GuestController::class , 'category']);
-Route::get('/brand/{brand}/{name}', [GuestController::class , 'brand'])->where(['brand'=>'[0-9]+' , 'name'=> '[a-zA-Z-0-9]+']);
+Route::get('/brand/{brand}', [GuestController::class , 'brand'])->where(['brand'=>'[0-9]+' , 'name'=> '[a-zA-Z-0-9]+']);
 Route::get("/cart" , [CartController::class , 'index']);
 Route::post("/cart/add" , [CartController::class , 'add']);
 Route::post("/cart/quantity" , [CartController::class , 'cart_quantity']);
@@ -19,7 +25,6 @@ Route::post("/cart/delete" , [CartController::class , 'destroy']);
 Route::get('/checkout', [UserController::class , 'checkout']);
 Route::post('/customer/info', [UserController::class , 'customer_info']);
 Route::get("/search" , [GuestController::class , 'search']);
-
 Route::middleware(['auth','admin'])->group(function () {
 
     Route::get('/dashboard', [UserController::class , 'admin'])->name('dashboard');
@@ -54,15 +59,17 @@ Route::middleware(['auth','admin'])->group(function () {
 
     Route::get('/admin/customers' , [UserController::class , 'customers']);
 
-
-
 });
 
 Route::middleware(['auth', 'customer' , 'verified'])->group(function () {
 
     Route::get('/customer', [UserController::class , 'customer'])->middleware('auth' , 'customer');
+
     Route::get('/confirm/order', [OrderController::class , 'confirm']);
+
     Route::get('/customer/{id}/orders' , [UserController::class , 'user_orders']);
+
+
 });
 
 require __DIR__.'/auth.php';

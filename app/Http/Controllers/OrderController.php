@@ -39,6 +39,7 @@ class OrderController extends Controller
             $items = $products->flatten()->pluck('quantity', 'product_id')->map(function ($value, $key) use ($data) {
 
                 return $data[$key] = ['quantity' => $value];
+
             })->toArray();
 
             $order = Order::Create([
@@ -55,8 +56,6 @@ class OrderController extends Controller
             event(new OrderConfirmed($order));
 
         });
-
-
 
         $request->session()->put('cart_quantity', 0);
 

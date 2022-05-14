@@ -16,7 +16,9 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        return view("admin.layouts.category.categories" , ['categories' => $categories]);
+        return response()->json($categories);
+
+       // return view("admin.layouts.category.categories" , ['categories' => $categories]);
     }
 
     /**
@@ -44,11 +46,16 @@ class CategoryController extends Controller
 
         ]);
 
-        $request->session()->flash('saved', "Category <strong>".$request->name . " </strong>Created..!");
+        //$request->session()->flash('saved', "Category <strong>".$request->name . " </strong>Created..!");
 
         Category::create($data);
 
-        return back();
+        return response()->json([
+            'message' => "Category <strong>".$request->name . " </strong>Created..!",
+            'status' => true
+        ],200);
+
+        //return back();
 
 
     }
@@ -61,21 +68,33 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view("admin.layouts.category.category" , ['category'=>$category]);
+        return response()->json($category);
+
+       // return view("admin.layouts.category.category" , ['category'=>$category]);
     }
 
     public function edit(Category $category)
     {
-        return view("admin.layouts.category.edit" , ['category' => $category]);
+
+        return response()->json($category);
+
+        //return view("admin.layouts.category.edit" , ['category' => $category]);
     }
 
     public function update(Request $request,Category $category)
     {
         $category->update($request->only('name','description'));
 
-        $request->session()->flash('edited' , 'Category Updated Successfuly..');
+        //$request->session()->flash('edited' , 'Category Updated Successfuly..');
 
-        return back();
+        return response()->json([
+            'message' => "Category <strong>".$request->name . " </strong>updated..!",
+            'status' => true
+        ],201);
+
+
+
+        //return back();
 
     }
 
