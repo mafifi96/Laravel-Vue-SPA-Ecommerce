@@ -18,6 +18,7 @@ const routes = [
         name: 'dashboard',
         component: Dashboard,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     },
@@ -26,6 +27,7 @@ const routes = [
         name: 'admin.categories',
         component: Categories,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     },
@@ -34,6 +36,7 @@ const routes = [
         name: 'admin.category',
         component: Category,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     },
@@ -42,6 +45,7 @@ const routes = [
         name: 'admin.category.create',
         component: CategoryCreate,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     },
@@ -50,6 +54,7 @@ const routes = [
         name: 'admin.category.edit',
         component: CategoryEdit,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     },
@@ -58,6 +63,7 @@ const routes = [
         name: 'admin.products',
         component: Products,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     },
@@ -66,6 +72,7 @@ const routes = [
         name: 'admin.product',
         component: Product,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     },
@@ -74,6 +81,7 @@ const routes = [
         name: 'admin.products.create',
         component: ProductCreate,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     },
@@ -82,6 +90,7 @@ const routes = [
         name: 'admin.products.edit',
         component: ProductEdit,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     },
@@ -90,6 +99,7 @@ const routes = [
         name: 'admin.orders',
         component: Orders,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     },
@@ -98,6 +108,7 @@ const routes = [
         name: 'admin.orders',
         component: Orders,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     },
@@ -106,6 +117,7 @@ const routes = [
         name: 'admin.orders.order',
         component: Order,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     },
@@ -114,6 +126,7 @@ const routes = [
         name: 'admin.customers',
         component: Customers,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     },
@@ -122,6 +135,7 @@ const routes = [
         name: 'admin.customers.customer',
         component: Customer,
         meta : {
+            middleware : "admin",
             layout : "AdminLayout"
         }
     }

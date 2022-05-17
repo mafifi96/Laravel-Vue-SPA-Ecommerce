@@ -17,7 +17,7 @@
                         <router-link :to="{ name: 'home' }" class="nav-link">Home</router-link>
                     </li>
 
-                    <template v-if="isAdmin">
+                    <template v-if="Authenticated && isAdmin">
 
                         <li class="nav-item">
                             <router-link class="nav-link" :to="{name : 'dashboard' }">Dashboard</router-link>
@@ -25,12 +25,12 @@
                         </li>
                     </template>
 
-                    <template v-if="isCustomer">
+                    <template v-if=" Authenticated && isCustomer">
                         <li class="nav-item">
                             <router-link class="nav-link" :to="{name : 'customer'}">Profile</router-link>
                         </li>
                     </template>
-                    <template v-if="notAuth">
+                    <template v-if="!Authenticated">
 
                         <li class="nav-item">
                             <router-link class="nav-link" :to="{name : 'register'}">register</router-link>
@@ -63,45 +63,29 @@
 </template>
 
 <script>
+
+import {mapGetters} from 'vuex'
+
     export default {
 
         data: function () {
 
             return {
-                isAdmin: false,
-                isCustomer: false,
-                notAuth: true,
                 searchQuery : ''
-                //CartQuantity: store.state.CartQuantity
             }
+        },
+        computed : {
+            ...mapGetters({
+                isAdmin : 'isAdmin',
+                isCustomer : 'isCustomer',
+                Authenticated : 'authenticated'
+            })
         },
         methods: {
             search()
             {
                 this.$router.push("/search?q="+this.searchQuery)
             },
-            CheckAuth() {
-
-                axios.post("http://127.0.0.1:8000/api/checkAuth").then(res => {
-
-                    if (res.data.isAdmin) {
-                        this.isAdmin = true;
-                        this.notAuth = false
-                        //this.isCustomer = false;
-                       // this.user = res.data.user
-                    } else if (res.data.isCustomer){
-                        this.notAuth = false
-                        //this.isAdmin = false
-                        this.isCustomer = true
-                        //this.user = res.data.user
-                    }
-
-                }).catch(err => {
-                    console.log(err)
-                })
-
-            },
-
             getCartQuantity()
             {
                 this.$store.dispatch('Quantity')
@@ -109,8 +93,7 @@
 
         },
 
-        created() {
-            this.CheckAuth()
+        mounted() {
             this.getCartQuantity()
 
         }

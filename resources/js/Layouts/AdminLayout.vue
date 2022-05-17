@@ -5,53 +5,54 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-        <!-- Sidebar - Brand -->
-        <router-link class="sidebar-brand d-flex align-items-center justify-content-center" :to="{name :'dashboard'}">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
+            <!-- Sidebar - Brand -->
+            <router-link class="sidebar-brand d-flex align-items-center justify-content-center"
+                :to="{name :'dashboard'}">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+            </router-link>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <router-link class="nav-link " :to="{name : 'dashboard'}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></router-link>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
             </div>
-            <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-        </router-link>
+            <li class="nav-item">
+                <router-link class="nav-link" :to="{name : 'admin.categories'}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Categories</span></router-link>
+            </li>
+            <li class="nav-item">
+                <router-link class="nav-link" :to="{name :'admin.products'}">
+                    <i class="fab fa-product-hunt"></i>
+                    <span>Products</span></router-link>
+            </li>
+            <li class="nav-item">
+                <router-link class="nav-link" :to="{name : 'admin.orders'}">
+                    <i class="fa fa-shipping-fast"></i>
+                    <span>Orders</span></router-link>
+            </li>
+            <li class="nav-item">
+                <router-link class="nav-link" :to="{name : 'admin.customers'}">
+                    <i class="fab fa-intercom"></i>
+                    <span>Customers</span></router-link>
+            </li>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <router-link class="nav-link " :to="{name : 'dashboard'}">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></router-link>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Interface
-        </div>
-        <li class="nav-item">
-            <router-link class="nav-link" :to="{name : 'admin.categories'}">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Categories</span></router-link>
-        </li>
-        <li class="nav-item">
-            <router-link class="nav-link" :to="{name :'admin.products'}">
-                <i class="fab fa-product-hunt"></i>
-                <span>Products</span></router-link>
-        </li>
-        <li class="nav-item">
-            <router-link class="nav-link" :to="{name : 'admin.orders'}">
-                <i class="fa fa-shipping-fast"></i>
-                <span>Orders</span></router-link>
-        </li>
-        <li class="nav-item">
-            <router-link class="nav-link" :to="{name : 'admin.customers'}">
-                <i class="fab fa-intercom"></i>
-                <span>Customers</span></router-link>
-        </li>
-
-    </ul>
+        </ul>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -64,7 +65,7 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <button  id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
 
@@ -113,7 +114,7 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle" @click.prevent="dropdownToggle()" id="userDropdown" role="button" data-toggle="dropdown">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ AuthUser.name }}</span>
                                 <img class="img-profile rounded-circle" src="imgs/undraw_profile.svg">
                             </a>
@@ -137,8 +138,7 @@
                                 <form method="POST" action="/logout">
 
                                     <a class="btn btn-primary dropdown-item" data-toggle="modal"
-                                        data-target="#logoutModal" href="javascript:void(0)" onclick="this.disabled='disabled'; event.preventDefault();
-                                                            this.closest('form').submit();">
+                                        data-target="#logoutModal" @click.once.prevent="logout()">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Logout
                                     </a>
@@ -175,39 +175,65 @@
             <i class="fas fa-angle-up"></i>
         </a>
 
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true"></span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="/logout">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 </template>
 
 <script>
+    import {
+        mapActions
+    } from 'vuex'
+    import {mapGetters} from 'vuex'
+
     export default {
-        data : () => ({
-        AuthUser: {
-          name: "Mohamed"
+        data: function () {
+            return {
+
+            }
+        },
+        computed : {
+            ...mapGetters({
+                AuthUser : 'user'
+            })
         }
-      })
+        ,
+        methods: {
+            ...mapActions({
+                signout: 'logout'
+            }),
+            async logout() {
+                await axios.post('/api/logout').then(res => {
+                    this.signout()
+                    this.$router.push({
+                        name: "login"
+                    })
+                }).catch(err=>{
+                    console.log(err)
+                })
+            },
+            dropdownToggle(){
+
+                $(".dropdown-menu").slideToggle();
+
+            }
+        }
 
     }
 
+/*
+$(function() {
+
+    $("#sidebarToggleTop").click(function(e) {
+        e.preventDefault();
+        $(".sidebar").toggleClass("toggled");
+    });
+
+    $("#userDropdown").click(function(e) {
+        e.preventDefault();
+        $(".dropdown-menu").slideToggle();
+    });
+
+ });
+ */
 </script>
 
 <style scoped>

@@ -7,6 +7,7 @@ const routes = [
         name : 'customer',
         component : Profile,
         meta : {
+            middleware : "customer",
             layout : 'CustomerLayout'
         }
     },
@@ -15,6 +16,7 @@ const routes = [
         name : 'customer.orders',
         component : Orders,
         meta : {
+            middleware : "customer",
             layout  : 'CustomerLayout'
         }
     }

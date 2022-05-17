@@ -134,11 +134,10 @@
                             </a>
                             <div class="dropdown-divider"></div>
 
-                            <form method="POST" action="/logout">
+                            <form >
 
                                 <a  class="btn btn-primary dropdown-item" data-toggle="modal" data-target="#logoutModal"
-                                    href="javascript:void(0)" onclick="this.disabled='disabled'; event.preventDefault();
-                                                            this.closest('form').submit();">
+                                    href="javascript:void(0)" @click.prevent="logout()" >
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>

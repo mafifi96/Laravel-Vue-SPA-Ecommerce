@@ -41,7 +41,10 @@ class AuthenticatedSessionController extends Controller
 */
         //$request->session()->regenerate();
 
-        return response()->json(['user' => Auth::user()]);
+        $token = auth()->user()->createToken('Token');
+
+        return response()->json([
+            'user' => Auth::user()->with('roles'), 'token' => $token->plainTextToken]);
     }
 
     /**
@@ -52,15 +55,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('api')->logout();
+        auth()->logout();
 
-        //Auth::guard('web')->logout();
+       // $request->session()->invalidate();
 
-        $request->session()->invalidate();
+        //$request->session()->regenerateToken();
 
-        $request->session()->regenerateToken();
-
-        return response(200);
+        return response()->json(['message' => 'logged out'],200);
         //return redirect('/');
     }
 }

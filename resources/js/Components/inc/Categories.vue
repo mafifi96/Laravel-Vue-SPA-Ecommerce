@@ -33,18 +33,11 @@
                 }).catch(err => {
                     console.log(err)
                 })
-            },
-            checkSession()
-            {
-                axios.post("/api/session")
-                .then(res => {
-                    console.log("Session : "+ res.data.message);
-                })
             }
         },
         mounted() {
             this.getCategories()
-            //this.checkSession()
+
         }
     }
 

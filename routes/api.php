@@ -12,35 +12,37 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\GuestController;
 
 
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user()->with('roles')->first();
+});
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
+Route::middleware('auth:sanctum')->group(function () {
+
+
 });
 
 Route::post('/session', function () {
     $session = session()->getId();
-return response()->json(['message' => $session]);
+    return response()->json(['message' => $session]);
 });
 
-Route::post('/checkAuth', [CheckerController::class , 'Check']);
+Route::post('/checkAuth', [CheckerController::class, 'Check']);
 /*Route::get('/categories', function () {
     return collect(Category::all('id','name'));
 });*/
 
-Route::apiResource('products' , ProductController::class);
-Route::apiResource('categories' , CategoryController::class);
-Route::get('/brand/{brand}', [GuestController::class , 'brand'])->where(['brand'=>'[0-9]+']);
-Route::post("/login" , [AuthenticatedSessionController::class , 'store']);
+Route::apiResource('products', ProductController::class);
+Route::apiResource('categories', CategoryController::class);
+Route::get('/brand/{brand}', [GuestController::class, 'brand'])->where(['brand' => '[0-9]+']);
+Route::post("/login", [AuthenticatedSessionController::class, 'store']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-    ->middleware('auth')
-    ->name('logout');
-Route::get("/search" , [GuestController::class , 'search']);
-Route::get("/cart" , [CartController::class , 'index']);
-Route::post("/cart/add" , [CartController::class , 'add']);
-Route::post("/cart/quantity" , [CartController::class , 'cart_quantity']);
-Route::post("/cart/delete" , [CartController::class , 'destroy']);
+Route::get("/search", [GuestController::class, 'search']);
+Route::get("/cart", [CartController::class, 'index']);
+Route::post("/cart/add", [CartController::class, 'add']);
+Route::post("/cart/quantity", [CartController::class, 'cart_quantity']);
+Route::post("/cart/delete", [CartController::class, 'destroy']);
 //Route::get('/checkout', [UserController::class , 'checkout']);
-Route::post('/customer/info', [UserController::class , 'customer_info']);
+Route::post('/customer/info', [UserController::class, 'customer_info']);
 //Route::get("/search" , [GuestController::class , 'search']);
 //Route::get('/admin/categories',[CategoryController::class , 'index']);
