@@ -47,7 +47,7 @@ export default new Vuex.Store({
                 commit('SET_AUTHENTICATED', true)
 
             }).catch(err => {
-                console.log(err)
+
                 commit('SET_USER', {})
                 commit('SET_AUTHENTICATED', false)
 
@@ -75,6 +75,9 @@ export default new Vuex.Store({
 
             return state.user.roles[0].name == "customer" ? true : false;
 
+        },
+        Quantity(state){
+            return state.CartQuantity
         }
 
     }

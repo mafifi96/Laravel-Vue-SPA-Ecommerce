@@ -54,6 +54,7 @@
                 axios.get("/api/categories/" + this.Id).then(res => {
 
                     this.category = res.data;
+                    document.title = "Store | "+ this.category.name
 
                 }).catch(err => {
                     alert(err)
@@ -67,7 +68,7 @@
                 this.getCategory()
             }
         },
-        created() {
+        mounted() {
             this.getCategory()
         }
 

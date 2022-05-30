@@ -12,7 +12,7 @@ const routes = [
         }
     },
     {
-        path : 'customer/:id(\\d+)/orders',
+        path : '/customer/orders',
         name : 'customer.orders',
         component : Orders,
         meta : {

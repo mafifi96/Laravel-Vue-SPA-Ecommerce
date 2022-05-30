@@ -51,9 +51,10 @@
                         </router-link>
                     </li>
                 </ul>
-                <form class="d-flex" >
-                    <input class="form-control me-2" type="search" v-model="searchQuery" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" @click.stop.prevent="search()" type="submit">Search</button>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" v-model="searchQuery" placeholder="Search"
+                        aria-label="Search">
+                    <button class="btn btn-outline-primary" @click.stop.prevent="search()" type="submit">Search</button>
                 </form>
 
             </div>
@@ -63,31 +64,30 @@
 </template>
 
 <script>
-
-import {mapGetters} from 'vuex'
+    import {
+        mapGetters
+    } from 'vuex'
 
     export default {
 
         data: function () {
 
             return {
-                searchQuery : ''
+                searchQuery: ''
             }
         },
-        computed : {
+        computed: {
             ...mapGetters({
-                isAdmin : 'isAdmin',
-                isCustomer : 'isCustomer',
-                Authenticated : 'authenticated'
+                isAdmin: 'isAdmin',
+                isCustomer: 'isCustomer',
+                Authenticated: 'authenticated'
             })
         },
         methods: {
-            search()
-            {
-                this.$router.push("/search?q="+this.searchQuery)
+            search() {
+                this.$router.push("/search?q=" + this.searchQuery)
             },
-            getCartQuantity()
-            {
+            getCartQuantity() {
                 this.$store.dispatch('Quantity')
             }
 

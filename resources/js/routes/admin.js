@@ -5,8 +5,8 @@ import CategoryCreate from '../Components/Admin/pages/category/create'
 import CategoryEdit from '../Components/Admin/pages/category/edit'
 import Products from '../Components/Admin/pages/product/products'
 import Product from '../Components/Admin/pages/product/product'
-import ProductCreate from '../Components/Admin/pages/product/create'
 import ProductEdit from '../Components/Admin/pages/product/edit'
+import ProductCreate from '../Components/Admin/pages/product/create'
 import Orders from '../Components/Admin/pages/order/orders'
 import Order from '../Components/Admin/pages/order/order'
 import Customers from '../Components/Admin/pages/customer/customers'
@@ -86,7 +86,7 @@ const routes = [
         }
     },
     {
-        path: '/admin/products/:id(\\id+)/edit',
+        path: '/admin/products/:id(\\d+)/edit',
         name: 'admin.products.edit',
         component: ProductEdit,
         meta : {
@@ -139,8 +139,6 @@ const routes = [
             layout : "AdminLayout"
         }
     }
-
-
 
 ];
 

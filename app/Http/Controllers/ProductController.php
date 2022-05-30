@@ -33,9 +33,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = DB::select('select id,name from categories ');
+        $categories = Category::all('id','name');
 
-        $brands = DB::select('select id,name from product_brand');
+        $brands = ProductBrand::all('id','name');
 
         return view("admin.layouts.product.create" , ['categories'=>$categories , 'brands' => $brands]);
 

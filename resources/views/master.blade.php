@@ -21,6 +21,8 @@
     <script type="text/javascript" src="{{asset("js/bootstrap.min.js")}}"></script>
     <script type="text/javascript" src="{{asset("js/fontawesome.min.js")}}"></script>
     <script type="text/javascript" src="{{asset("js/sb-admin-2.min.js")}}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <title>@yield('title')</title>
 
@@ -35,6 +37,8 @@
     <!-- CUSTOM JS SCRIPTS -->
     @stack('Scripts')
     <script type="text/javascript" src="{{asset("js/guest.js")}}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>

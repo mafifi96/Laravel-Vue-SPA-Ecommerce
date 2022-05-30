@@ -2,6 +2,8 @@
     <div class="col-md-10 col-lg-10 col-sm-12 ">
         <div class="container">
             <div class="row">
+            <Spinner v-show="loading"></Spinner>
+
                 <!-- Products -->
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="row">
@@ -68,22 +70,29 @@
 
 <script>
 
+import Spinner from '../inc/Spinner'
+
     export default {
 
         data() {
             return {
                 products: [],
                 Id : this.$route.params.id,
-                title : this.$route.params.name
+                title : this.$route.params.name,
+                loading : true
 
             }
         },
-
+        components : {
+            Spinner
+        },
         methods: {
             getProducts() {
                 axios.get("http://127.0.0.1:8000/api/brand/" + this.Id ).then(res => {
                     this.products = res.data;
-                    console.log(res.data)
+                    this.loading = false
+                    document.title = "Store | "+ this.title
+
                 }).catch(err => {
                     console.log(err)
                 })
@@ -122,16 +131,7 @@
                     return;
                 }
 
-            },
-            getTitle()
-            {
-                document.title = "Store | " + this.title
-
             }
-        },
-        created(){
-this.getTitle()
-
         },
         mounted() {
             this.getProducts();

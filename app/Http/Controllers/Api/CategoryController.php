@@ -85,7 +85,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $category->update($request->only('name','description'));
+
+
+        return response()->json([
+            'message' => "Category <strong>".$request->name . " </strong>updated..!",
+            'status' => true
+        ],201);
+
     }
 
     /**

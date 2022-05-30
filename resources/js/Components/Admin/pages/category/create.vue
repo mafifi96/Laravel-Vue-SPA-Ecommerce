@@ -83,6 +83,9 @@
                 })
             }
         },
+        mounted(){
+            document.title = "Store | Create Category"
+        }
 
     }
 

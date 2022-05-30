@@ -18,8 +18,13 @@
                                             <div class="text-center">
                                                 <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                             </div>
-                                            <div v-show="errors && errors.msg" class="alert alert-danger">
-                                                {{ errors.msg }}
+                                            <div class="alert alert-danger"
+                                                v-if="errors && (errors.email || errors.password || errors.message)">
+                                                <div v-for="(v, k) in errors" :key="k">
+                                                    <p v-for="error in v" :key="error" class="text-sm">
+                                                        {{ error }}
+                                                    </p>
+                                                </div>
                                             </div>
 
                                             <form class="user" @submit.prevent="login" method="post">
@@ -72,18 +77,16 @@
 </template>
 
 <script>
-    import ValidationErrors from '../inc/ValidationErrors.vue'
     import {
         mapActions
     } from 'vuex'
 
+
     export default {
-        components: {
-            ValidationErrors
-        },
+
         data() {
             return {
-                errors: {},
+                errors: null,
                 creds: {
                     email: '',
                     password: '',
@@ -104,12 +107,13 @@
                     this.signIn()
 
                 }).catch(err => {
-                    this.errors = err;
+                    this.errors = err.response.data.errors;
+                    console.log(err)
                 }).finally(() => {
                     this.processing = false
                 })
             },
-             redirectAuth() {
+            redirectAuth() {
                 if (this.$store.getters.isAdmin) {
                     this.$router.push({
                         name: 'dashboard'
@@ -122,13 +126,17 @@
                 }
             }
         },
-        watch:{
-            '$store.getters.authenticated' : function(){
+        watch: {
+            '$store.getters.authenticated': function () {
                 this.redirectAuth()
             }
         },
+        created(){
+            document.title = "Store | Login"
+        },
         mounted() {
             this.redirectAuth()
+
         }
 
     }

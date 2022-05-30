@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{asset("css/styles.css")}}">
     <link rel="stylesheet" href="{{asset("css/bootstrap.min.css")}}">
     <link rel="stylesheet" href="{{asset("css/sb-admin-2.min.css")}}">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <title>@yield('title')</title>
 

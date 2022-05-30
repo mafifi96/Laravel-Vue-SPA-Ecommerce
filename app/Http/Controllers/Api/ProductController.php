@@ -9,6 +9,7 @@ use App\Models\ProductBrand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -19,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return response()->json(Product::with('images')->get());
+        return response()->json(Product::with('images', 'category')->get());
     }
 
     /**
@@ -30,11 +31,11 @@ class ProductController extends Controller
     public function create()
     {
 
-        $categories = Category::all('id','name');
+        $categories = Category::all('id', 'name');
 
-        $brands = ProductBrand::all('id' , 'name');
+        $brands = ProductBrand::all('id', 'name');
 
-        return response()->json(['categories' => $categories , 'brands' => $brands]);
+        return response()->json(['categories' => $categories, 'brands' => $brands]);
     }
 
     /**
@@ -45,24 +46,23 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $validator = Validator::make($request->all());
 
-        if($validator->fails())
-        {
-            return response()->json(['errors' => $validator->errors()]);
+         if (! $request->validated()) {
+            return response()->json(['errors' => $request->errors()]);
         }
 
         $request->validate([
+
             'image' => 'required|mimes:png,jpg,jpeg|max:2048'
         ]);
 
         $file_name = $request->file('image')->storePublicly('covers');
 
-        $product = Product::create($request->all());
+        $product = Product::create($request->except('image'));
 
-        $image = $product->images()->create(['image'=>$file_name]);
+        $image = $product->images()->create(['image' => $file_name]);
 
-        return response()->json(['product' => $product->load('images')]);
+        return response()->json(['message' =>  'Product Saved Successfully', 'status' => true], 200);
 
     }
 
@@ -75,8 +75,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
 
-        return response()->json( ['product'=>$product->load(['images','brand'])],200);
-
+        return response()->json(['product' => $product->load(['images', 'brand', 'category'])], 200);
     }
 
     /**
@@ -97,11 +96,26 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        $product->update($request->all());
+        //return response()->json(dd($request->all()));
 
-        return response()->json(['message' => "Product Updated"],201);
+        if (! $request->validated()) {
+            return response()->json(['errors' => $request->errors()]);
+        }
+
+        $product->update($request->except('image'));
+
+        $request->validate([
+
+            'image' => 'mimes:png,jpg,jpeg|max:2048'
+        ]);
+
+        $file_name = $request->file('image')->storePublicly('covers');
+
+        $image = $product->images()->create(['image' => $file_name]);
+
+        return response()->json(['message' => "Product Updated"], 201);
     }
 
     /**
@@ -113,6 +127,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return response()->json(['message' => "Product Deleted"],200);
+
+        return response()->json(['message' => "Product Deleted"], 200);
     }
 }

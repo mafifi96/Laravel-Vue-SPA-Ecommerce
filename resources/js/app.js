@@ -30,18 +30,22 @@ const router = new VueRouter({
         if(store.getters.isAdmin){
             next()
         }else{
-            next({name : "login"})
+            next(router.go(-1))
         }
     }else if(to.meta.middleware == "customer")
     {
         if(store.getters.isCustomer){
             next()
         }else{
-            next({name : "login"})
+            next(router.go(-1))
         }
     }
 next()
 })
+
+
+
+
 
  const app = new Vue({
 

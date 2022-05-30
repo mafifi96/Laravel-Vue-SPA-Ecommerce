@@ -20,24 +20,13 @@
     import Categories from '../Components/inc/Categories'
     import Footer from '../Components/inc/Footer'
 
+
     export default {
         components: {
             Nav,
             Categories,
             Footer
-        },
-        methods: {
-            getToken() {
-                axios.get('/api/user').then(res => {
-                    console.log("Token :" + res.data)
-                }).catch(err => {
-                    console.log(err)
-                })
-            }
-        },
-        mounted() {
-            this.getToken()
-        },
+        }
 
     }
 
