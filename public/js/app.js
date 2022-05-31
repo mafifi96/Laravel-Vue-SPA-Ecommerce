@@ -5601,7 +5601,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (Quantity == '' && !isNaN(Quantity) || Quantity >= 1 && !isNaN(Quantity)) {
         Quantity = Quantity == '' ? 1 : Quantity;
-        axios.post("http://127.0.0.1:8000/api/cart/add", {
+        axios.post("/api/cart/add", {
           product_id: Id,
           quantity: Quantity
         }).then(function (res) {
@@ -71124,7 +71124,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.d
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_1__.default.config.productionTip = false;
+vue__WEBPACK_IMPORTED_MODULE_1__.default.config.productionTip = true;
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__.default({
   mode: 'history',
   routes: _routes_routes__WEBPACK_IMPORTED_MODULE_4__.default
