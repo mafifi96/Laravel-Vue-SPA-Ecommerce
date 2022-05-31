@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::directive('ifadmin' , function()
+        /* Blade::directive('ifadmin' , function()
         {
             return "<?php
 
@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         view()->share('categories', Category::all());
-
+*/
         \Illuminate\Pagination\Paginator::useBootstrap();
         Model::preventLazyLoading();
 

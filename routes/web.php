@@ -1,19 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+/*
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderController;*/
 
 Route::get('/{any}', function()
 {
 return view("app");
 }
 )->where('any','.*');
-
+/*
 Route::get('/', [GuestController::class , 'index']);
 Route::get('/product/{product}', [GuestController::class , 'product']);
 Route::get('/category/{category}/{name}', [GuestController::class , 'category']);
@@ -73,3 +74,4 @@ Route::middleware(['auth', 'customer' , 'verified'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+*/
