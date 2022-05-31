@@ -2409,7 +2409,7 @@ __webpack_require__.r(__webpack_exports__);
     getCategories: function getCategories() {
       var _this = this;
 
-      axios.get("http://127.0.0.1:8000/api/categories").then(function (res) {
+      axios.get("/api/categories").then(function (res) {
         _this.categories = res.data;
       })["catch"](function (err) {
         console.log(err);
@@ -3237,7 +3237,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getCategoriesAndBrands: function getCategoriesAndBrands() {
       var _this = this;
 
-      axios.get("http://127.0.0.1:8000/api/products/create").then(function (res) {
+      axios.get("/api/products/create").then(function (res) {
         _this.categories = res.data.categories;
         _this.brands = res.data.brands;
       })["catch"](function (err) {
@@ -4204,7 +4204,7 @@ __webpack_require__.r(__webpack_exports__);
     getProducts: function getProducts() {
       var _this = this;
 
-      axios.get("http://127.0.0.1:8000/api/brand/" + this.Id).then(function (res) {
+      axios.get("/api/brand/" + this.Id).then(function (res) {
         _this.products = res.data;
         _this.loading = false;
         document.title = "Store | " + _this.title;
@@ -4335,8 +4335,6 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$store.dispatch('Quantity');
 
         _this2.getCartPoroducts();
-
-        _this2.getTitle();
       })["catch"](function (err) {
         console.log(err);
       });
@@ -4656,9 +4654,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                //console.log(this.formData)
-                _this.processing = true; //await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie')
-
+                _this.processing = true;
                 _context.next = 3;
                 return axios.post("/api/customer/info", _this.formData).then(function (res) {
                   _this.signIn();
@@ -4679,8 +4675,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     filechanged: function filechanged(event) {
-      //this.clearMessage();
-      this.formData.image = event.target.files[0]; //console.log(this.formData.image)
+      this.formData.image = event.target.files[0];
     },
     redirectAuth: function redirectAuth() {
       if (this.$store.getters.isAdmin) {
@@ -4817,7 +4812,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (Quantity == '' && !isNaN(Quantity) || Quantity >= 1 && !isNaN(Quantity)) {
         Quantity = Quantity == '' ? 1 : Quantity;
-        axios.post("http://127.0.0.1:8000/api/cart/add", {
+        axios.post("/api/cart/add", {
           product_id: Id,
           quantity: Quantity
         }).then(function (res) {
@@ -4953,7 +4948,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (Quantity == '' && !isNaN(Quantity) || Quantity >= 1 && !isNaN(Quantity)) {
         Quantity = Quantity == '' ? 1 : Quantity;
-        axios.post("http://127.0.0.1:8000/api/cart/add", {
+        axios.post("/api/cart/add", {
           product_id: Id,
           quantity: Quantity
         }).then(function (res) {
@@ -5189,11 +5184,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 0:
                 _this.processing = true;
                 _context.next = 3;
-                return axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie');
+                return axios.get('/sanctum/csrf-cookie');
 
               case 3:
                 _context.next = 5;
-                return axios.post('http://127.0.0.1:8000/api/login', _this.creds).then(function (res) {
+                return axios.post('/api/login', _this.creds).then(function (res) {
                   _this.signIn();
                 })["catch"](function (err) {
                   _this.errors = err.response.data.errors;
@@ -5450,7 +5445,7 @@ __webpack_require__.r(__webpack_exports__);
     getCategories: function getCategories() {
       var _this = this;
 
-      axios.get("http://127.0.0.1:8000/api/categories").then(function (res) {
+      axios.get("/api/categories").then(function (res) {
         _this.categories = res.data;
       })["catch"](function (err) {
         console.log(err);
@@ -5590,7 +5585,7 @@ __webpack_require__.r(__webpack_exports__);
     getProducts: function getProducts() {
       var _this = this;
 
-      axios.get("http://127.0.0.1:8000/api/products").then(function (res) {
+      axios.get("/api/products").then(function (res) {
         _this.products = res.data;
         _this.loading = false;
       })["catch"](function (err) {
@@ -6238,28 +6233,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     dropdownToggle: function dropdownToggle() {
       $(".dropdown-menu").slideToggle();
     }
-    /* redirectAuth() {
-       if (this.$store.getters.isAdmin) {
-           this.$router.push({
-               name: 'dashboard'
-           })
-        } else if (this.$store.getters.isCustomer) {
-           this.$router.push({
-               name: 'customer'
-           })
-       }
-    } */
-
   })
-  /* watch:{
-      '$store.getters.authenticated' : function(){
-          this.redirectAuth()
-      }
-  },
-  mounted() {
-      this.redirectAuth()
-  } */
-
 });
 
 /***/ }),
@@ -6684,7 +6658,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.d
     },
     login: function login(_ref2) {
       var commit = _ref2.commit;
-      return axios.get('/api/user').then(function (res) {
+      return axios.get('https://spa-ecommerce.herokuapp.com/api/user').then(function (res) {
         commit('SET_USER', res.data);
         commit('SET_AUTHENTICATED', true);
       })["catch"](function (err) {

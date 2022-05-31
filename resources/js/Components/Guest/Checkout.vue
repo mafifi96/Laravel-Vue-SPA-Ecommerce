@@ -98,9 +98,9 @@ import {mapActions} from 'vuex'
                 signIn : 'login'
             }),
             async Checkout() {
-                //console.log(this.formData)
+
                 this.processing = true
-                //await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie')
+
                 await axios.post("/api/customer/info" , this.formData).then(res=>{
 
                     this.signIn()
@@ -115,9 +115,9 @@ import {mapActions} from 'vuex'
 
             },
             filechanged(event) {
-                //this.clearMessage();
+
                 this.formData.image = event.target.files[0];
-                //console.log(this.formData.image)
+
             },
             redirectAuth() {
                 if (this.$store.getters.isAdmin) {

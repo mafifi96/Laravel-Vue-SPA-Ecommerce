@@ -101,8 +101,8 @@
             }),
             async login() {
                 this.processing = true
-                await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie')
-                await axios.post('http://127.0.0.1:8000/api/login', this.creds).then(res => {
+                await axios.get('/sanctum/csrf-cookie')
+                await axios.post('/api/login', this.creds).then(res => {
 
                     this.signIn()
 

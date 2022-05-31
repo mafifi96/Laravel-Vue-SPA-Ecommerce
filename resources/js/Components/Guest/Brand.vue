@@ -88,7 +88,7 @@ import Spinner from '../inc/Spinner'
         },
         methods: {
             getProducts() {
-                axios.get("http://127.0.0.1:8000/api/brand/" + this.Id ).then(res => {
+                axios.get("/api/brand/" + this.Id ).then(res => {
                     this.products = res.data;
                     this.loading = false
                     document.title = "Store | "+ this.title

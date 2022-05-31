@@ -191,28 +191,8 @@
 
                 $(".dropdown-menu").slideToggle();
 
-            },
-             /* redirectAuth() {
-                if (this.$store.getters.isAdmin) {
-                    this.$router.push({
-                        name: 'dashboard'
-                    })
-
-                } else if (this.$store.getters.isCustomer) {
-                    this.$router.push({
-                        name: 'customer'
-                    })
-                }
-            } */
-        },
-        /* watch:{
-            '$store.getters.authenticated' : function(){
-                this.redirectAuth()
             }
         },
-        mounted() {
-            this.redirectAuth()
-        } */
 
     }
 

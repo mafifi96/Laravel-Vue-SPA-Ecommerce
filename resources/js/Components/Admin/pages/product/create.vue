@@ -122,7 +122,7 @@
 
             },
             getCategoriesAndBrands() {
-                axios.get("http://127.0.0.1:8000/api/products/create").then(res => {
+                axios.get("/api/products/create").then(res => {
 
                     this.categories = res.data.categories;
                     this.brands = res.data.brands;

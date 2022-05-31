@@ -65,7 +65,7 @@
         },
         methods: {
             getCategories() {
-                axios.get("http://127.0.0.1:8000/api/categories").then(res => {
+                axios.get("/api/categories").then(res => {
                     this.categories = res.data;
 
                 }).catch(err => {

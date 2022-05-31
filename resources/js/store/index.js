@@ -42,7 +42,7 @@ export default new Vuex.Store({
         login({
             commit
         }) {
-            return axios.get('/api/user').then(res => {
+            return axios.get('https://spa-ecommerce.herokuapp.com/api/user').then(res => {
                 commit('SET_USER', res.data)
                 commit('SET_AUTHENTICATED', true)
 

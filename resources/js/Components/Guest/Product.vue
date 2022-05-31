@@ -103,7 +103,7 @@
 
                     Quantity = (Quantity == '') ? 1 : Quantity;
 
-                    axios.post("http://127.0.0.1:8000/api/cart/add", {
+                    axios.post("/api/cart/add", {
                         product_id: Id,
                         quantity: Quantity,
                     }).then(res => {

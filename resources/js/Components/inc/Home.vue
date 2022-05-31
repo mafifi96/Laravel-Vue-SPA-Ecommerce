@@ -80,7 +80,7 @@ import Spinner from './Spinner'
         },
         methods: {
             getProducts() {
-                axios.get("http://127.0.0.1:8000/api/products").then(res => {
+                axios.get("/api/products").then(res => {
                     this.products = res.data;
                     this.loading = false
                 }).catch(err => {
@@ -99,7 +99,7 @@ import Spinner from './Spinner'
 
                     Quantity = (Quantity == '') ? 1 : Quantity;
 
-                    axios.post("http://127.0.0.1:8000/api/cart/add", {
+                    axios.post("/api/cart/add", {
                         product_id: Id,
                         quantity: Quantity,
                     }).then(res => {
