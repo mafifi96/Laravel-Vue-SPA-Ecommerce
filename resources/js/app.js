@@ -2,7 +2,7 @@ require('./bootstrap');
 
 import Vue from 'vue'
 
-import Vuex, { Store } from 'vuex'
+import Vuex from 'vuex'
 
 import VueRouter from 'vue-router'
 
