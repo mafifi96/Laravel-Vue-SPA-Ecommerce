@@ -57,13 +57,14 @@ components : {
         methods: {
             getCartPoroducts() {
                 axios.get("/api/cart").then(res => {
+
+                    this.products = res.data.CartProducts;
+                    this.loading = false
                     if (!res.data.CartProducts.length) {
                         this.emptyCart = true;
 
                     }
 
-                    this.products = res.data.CartProducts;
-                    this.loading = false
 
                 }).catch(err => {
                     console.log(err)
