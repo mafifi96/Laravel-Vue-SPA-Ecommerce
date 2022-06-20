@@ -90,7 +90,7 @@
     </div>
     <!-- /.container-fluid -->
 
-    </div>
+
 </template>
 
 <script>

@@ -46,7 +46,8 @@
 
                     <li class="nav-item">
                         <router-link class="nav-link cart" :to="{name : 'cart'}"><i class="fas fa-shopping-cart"></i>
-                            <span id="cart" v-if="$store.state.CartQuantity != 0">{{ $store.state.CartQuantity }}
+
+                            <span  v-if="$store.state.CartQuantity != 0">{{quantity}}
                             </span>
                         </router-link>
                     </li>
@@ -78,6 +79,7 @@
         },
         computed: {
             ...mapGetters({
+                quantity : 'quantity',
                 isAdmin: 'isAdmin',
                 isCustomer: 'isCustomer',
                 Authenticated: 'authenticated'
@@ -88,7 +90,12 @@
                 this.$router.push("/search?q=" + this.searchQuery)
             },
             getCartQuantity() {
-                this.$store.dispatch('Quantity')
+
+            console.log("getting quantity - ")
+
+            this.$store.dispatch('Quantity')
+
+            console.log("quantity loaded - ")
             }
 
         },

@@ -6,6 +6,7 @@
                 <Spinner v-show="loading"></Spinner>
 
                 <!-- Products -->
+
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-lg-6 mb-3 " v-for=" product in products" :key="product.id">
@@ -66,6 +67,7 @@
 </template>
 
 <script>
+
 import Spinner from './Spinner'
     export default {
 

@@ -77,6 +77,7 @@
 </template>
 
 <script>
+
     import {
         mapActions
     } from 'vuex'
@@ -92,6 +93,7 @@
                     password: '',
                 },
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+
                 processing: false
             }
         },
@@ -103,7 +105,9 @@
                 this.processing = true
                 await axios.get('/sanctum/csrf-cookie')
                 await axios.post('/api/login', this.creds).then(res => {
-
+                    console.log("token "+res.data.token)
+                    console.log("user "+res.data.user)
+                    window.axios.defaults.headers.common = {'Authorization': `Bearer ${res.data.token}`}
                     this.signIn()
 
                 }).catch(err => {

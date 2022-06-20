@@ -20,12 +20,14 @@
                                 </li>
 
                             </ul>
-                            <h6 v-if="emptyCart" class="text-center mt-3 mb-3">Your Cart Is Empty</h6>
-
-                            <div v-else class="px-2 mt-3 d-flex justify-content-center">
+                            <template v-if="emptyCart && !loading">
+                            <h6  class="text-center mt-3 mb-3">Your Cart Is Empty</h6>
+</template>
+<template v-if="products.length && !loading">
+                            <div  class="px-2 mt-3 d-flex justify-content-center">
                                 <router-link :to="{name : 'checkout'}" class="btn btn-primary">Checkout</router-link>
                             </div>
-
+</template>
                         </div>
                     </div>
                 </div>
@@ -47,7 +49,7 @@ import Spinner from '../inc/Spinner'
             return {
                 products: [],
                 emptyCart: false,
-                loading : false
+                loading : true
             }
         },
 components : {
@@ -59,11 +61,12 @@ components : {
 
                     this.products = res.data.CartProducts;
                     this.loading = false
-                    if (!res.data.CartProducts.length) {
+
+                    if (!this.products.length) {
+
                         this.emptyCart = true;
 
                     }
-
 
                 }).catch(err => {
                     console.log(err)
@@ -87,10 +90,6 @@ components : {
             getTitle(){
                 document.title = "Store | ("+ this.$store.getters.Quantity + ")"
             }
-        },
-        created()
-        {
-               this.getTitle()
         }
         ,
         mounted() {

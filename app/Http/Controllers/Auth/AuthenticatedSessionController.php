@@ -40,14 +40,16 @@ class AuthenticatedSessionController extends Controller
             ->update([
                 'user_id' => Auth::id()
             ]);
+
             $request->session()->regenerate();
+
         });
 
         $token = auth()->user()->createToken('Token')->plainTextToken;
 
 
         return response()->json([
-            'loggedIn' => true, 'token' => $token]);
+            'loggedIn' => true, 'token' => $token , 'user' => auth()->user()->id]);
 
     }
 

@@ -1,20 +1,25 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import {createStore} from 'vuex'
 
-Vue.use(Vuex)
+import createPersistedState from 'vuex-persistedstate'
 
-export default new Vuex.Store({
-    state: {
-
+const store = createStore({
+    plugins: [
+        createPersistedState()
+    ],
+    state(){
+    return {
         CartQuantity: 0,
         authenticated: false,
-        user: {}
+        user: {},
+        no : 0
 
-    },
+    }},
     mutations: {
 
         UPDATE_QUANTITY(state, payload) {
             state.CartQuantity = payload
+            console.log("mutation called for quantity - ")
+
         },
         SET_AUTHENTICATED(state, payload) {
             state.authenticated = payload
@@ -22,41 +27,60 @@ export default new Vuex.Store({
         SET_USER(state, payload) {
             state.user = payload
         }
+        ,
+        SET_NO(state){
+            state.no++
+            console.log("mutation called for no - ")
+        }
     },
     actions: {
-        Quantity({
-            commit
-        }) {
+        no(context){
+            context.commit("SET_NO")
+        },
+        Quantity(context) {
             axios.post("/api/cart/quantity").then(res => {
+                console.log("updating quantity - ")
 
-                commit("UPDATE_QUANTITY", Number(res.data.quantity))
+                context.commit("UPDATE_QUANTITY", Number(res.data.quantity))
+
+                console.log("quantity updated - " + res.data.quantity)
+
+            }).catch(err=>{
+                console.log("failed to get quantity - ")
+                console.log(err)
 
             })
         },
 
-        login({
-            commit
-        }) {
-            return axios.get('/api/user').then(res => {
+        login({commit}) {
+                axios.get('/api/user').then(res => {
+                console.log("loggin... - ")
+
                 commit('SET_USER', res.data)
                 commit('SET_AUTHENTICATED', true)
 
+                console.log("should be logged - ")
+
             }).catch(err => {
+                console.log(err)
+                console.log("loggin error - ")
 
                 commit('SET_USER', {})
                 commit('SET_AUTHENTICATED', false)
 
+                console.log("loggin failed - ")
+
             })
         },
-        logout({
-            commit
-        }) {
+        logout({commit}) {
             commit('SET_USER', {})
             commit('SET_AUTHENTICATED', false)
         }
     },
     getters: {
-
+        quantity(state){
+            return state.CartQuantity
+        },
         authenticated(state) {
             return state.authenticated
         },
@@ -64,16 +88,22 @@ export default new Vuex.Store({
             return state.user
         },
         isAdmin(state) {
+            if(Object.keys(state.user).length != 0 ){
             return state.user.roles[0].name == "admin" ? true : false;
+            }
+            return false
         },
         isCustomer(state) {
-
+            if(Object.keys(state.user).length != 0 ){
             return state.user.roles[0].name == "customer" ? true : false;
-
+            }
+            return false
         },
-        Quantity(state){
-            return state.CartQuantity
+        no(state){
+            return state.no
         }
 
     }
 })
+
+export default store

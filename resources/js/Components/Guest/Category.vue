@@ -59,7 +59,7 @@
 
                             </div>
                         </div>
-                        <h6 v-show="!products.products.length" class="text-capitalize text-center">no products in
+                        <h6 v-show="!products.products.length && !loading" class="text-capitalize text-center">no products in
                             <strong>{{products.name}}</strong> category </h6>
                     </div>
                 </div>
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+
 import Spinner from '../inc/Spinner'
 
     export default {
@@ -83,7 +84,6 @@ import Spinner from '../inc/Spinner'
                 Id: this.$route.params.id,
                 title: this.$route.params.name,
                 loading : true
-
             }
         },
         components : {

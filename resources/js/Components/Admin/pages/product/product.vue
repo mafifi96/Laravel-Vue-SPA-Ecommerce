@@ -39,12 +39,14 @@
                         :title="product.title">
                 </div>
                 <div v-html="product.description" class="body mt-3">
-</slot>
-                    <p class="mt-3"> Category : <router-link class="text-decoration-none"
+
+
+                </div>
+                <div>
+                <p class="mt-3"> Category : <router-link class="text-decoration-none"
                             :to="{name : 'admin.category' , params : {id : product.category.id}}"><strong>{{product.category.name}}</strong></router-link>
                     </p>
                 </div>
-
             </div>
 
 
@@ -52,8 +54,7 @@
 
     </div>
     <!-- /.container-fluid -->
-    </div>
-
+</div>
 </template>
 
 <script>

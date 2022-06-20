@@ -75,6 +75,7 @@
 
 
 <script>
+
     import {
         mapActions
     } from 'vuex'
@@ -101,6 +102,7 @@
             async register() {
                 this.processing = true;
                 await axios.post("/api/register",this.creds).then(res => {
+                    window.axios.defaults.headers.common = {'Authorization': `Bearer ${res.data.token}`}
                      this.signIn()
                 }).catch(err => {
                     this.errors = err.response.data.errors;

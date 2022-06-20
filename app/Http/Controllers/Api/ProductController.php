@@ -106,15 +106,18 @@ class ProductController extends Controller
 
         $product->update($request->except('image'));
 
-        $request->validate([
+        if($request->has('image')){
 
-            'image' => 'mimes:png,jpg,jpeg|max:2048'
-        ]);
+            $request->validate([
 
-        $file_name = $request->file('image')->storePublicly('covers');
+                'image' => 'mimes:png,jpg,jpeg|max:2048'
+            ]);
 
-        $image = $product->images()->create(['image' => $file_name]);
+            $file_name = $request->file('image')->storePublicly('public/covers');
 
+            $image = $product->images()->update(['image' => str_replace('public/','',$file_name)]);
+
+        }
         return response()->json(['message' => "Product Updated"], 201);
     }
 

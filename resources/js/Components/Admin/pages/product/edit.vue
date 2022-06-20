@@ -94,7 +94,7 @@
     </div>
     <!-- /.container-fluid -->
 
-    </div>
+
 </template>
 
 <script>
@@ -132,8 +132,8 @@
                 console.log(new FormData(this.product.image))
 
             },
-            getCategoriesAndBrands() {
-                axios.get("/api/products/create").then(res => {
+            async getCategoriesAndBrands() {
+               await axios.get("/api/products/create").then(res => {
 
                     this.categories = res.data.categories;
                     this.brands = res.data.brands;
@@ -179,6 +179,7 @@
                             icon: 'success',
                             showCancelButton: true
                         })
+                        this.getProduct()
 
                     }).catch(err => {
 
@@ -190,8 +191,8 @@
                     })
 
             },
-            getProduct() {
-                axios.get("/api/products/" + this.ID).then(res => {
+            async getProduct() {
+               await axios.get("/api/products/" + this.ID).then(res => {
                     this.product = res.data.product
 
                     document.title = "Store | Edit - " + this.product.title

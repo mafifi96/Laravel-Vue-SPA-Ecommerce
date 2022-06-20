@@ -202,6 +202,7 @@
             }),
             async logout() {
                 await axios.post('/api/logout').then(res => {
+                     axios.defaults.headers.common = {'Authorization': ''}
                     this.signout()
                     this.$router.push({
                         name: "login"

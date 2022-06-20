@@ -25,15 +25,14 @@
         },
         methods : {
             getToken() {
-                axios.get('/api/user').then(res => {
-                    //console.log("user" + res.data.id)
-                    next()
+                axios.post('/api/session').then(res => {
+                    console.log("user : " + res.data.message)
+
                 }).catch(err => {
-                    if(err.response.status == 401)
-                    {
+
                         this.$store.state.user = {}
                         this.$store.state.authenticated = false
-                    }
+
                 })
             }
         },
