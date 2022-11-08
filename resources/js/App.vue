@@ -26,7 +26,6 @@
         methods : {
             getToken() {
                 axios.post('/api/session').then(res => {
-                    console.log("user : " + res.data.message)
 
                 }).catch(err => {
 

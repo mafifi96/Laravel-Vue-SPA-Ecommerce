@@ -10,28 +10,27 @@ import store from './store'
 
 
 
- router.beforeEach((to,from,next)=>{
-
-    if(to.meta.middleware == "admin")
-    {
-        if(store.getters.isAdmin){
-            next()
-        }else{
-            next({name : "login"})
-        }
-    }else if(to.meta.middleware == "customer")
-    {
-        if(store.getters.isCustomer){
-            next()
-        }else{
-            next({name : "login"})
-        }
-    }
-next()
-})
 
 const app = createApp({
     components :{
         App
     }
 }).use(router).use(store).mount("#app")
+
+router.beforeEach((to,from,next)=>{
+
+    if(to.meta.middleware == "admin")
+    {
+        if(!store.getters.isAdmin || !store.getters.authenticated){
+            localStorage.clear()
+            next({name : "login"})
+        }
+    }else if(to.meta.middleware == "customer")
+    {
+        if(!store.getters.isCustomer || !store.getters.authenticated){
+            localStorage.clear()
+             next({name : "login"})
+        }
+    }
+next()
+})

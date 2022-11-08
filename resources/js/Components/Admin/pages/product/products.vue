@@ -62,17 +62,19 @@
                                                 :to="{name : 'admin.category' , params : {id : product.category.id}}"
                                                 class="btn text-decoration-none">{{product.category.name}}</router-link>
                                         </td>
-                                        <td>{{product.created_at | moment}}</td>
-                                        <td>{{product.updated_at | moment}}</td>
+                                        <td>{{formateDate(product.created_at)}}</td>
+                                        <td>{{formateDate(product.updated_at)}}</td>
+
                                         <td>
                                             <div class="btn-group">
-                                                <router-link                                       :to="{name : 'admin.products.edit', params : {id : product.id}}"
+                                                <router-link
+                                                    :to="{name : 'admin.products.edit', params : {id : product.id}}"
                                                     class="btn btn-primary">
                                                     <i class="fas fa-edit"></i>
-                                                    </router-link>
-                                                    <a @click.prevent="warning($event)" :data-id="product.id"
+                                                </router-link>
+                                                <a @click.prevent="warning($event)" :data-id="product.id"
                                                     class="btn btn-danger "><i class="fas fa-trash"></i>
-                                                    </a>
+                                                </a>
 
                                             </div>
                                         </td>
@@ -91,7 +93,6 @@
     </div>
 </template>
 <script>
-
     import moment from 'moment'
 
     export default {
@@ -103,7 +104,7 @@
         },
         methods: {
             getProducts() {
-                axios.get("http://127.0.0.1:8000/api/products").then(res => {
+                axios.get("/api/products").then(res => {
 
                     this.products = res.data;
 
@@ -141,19 +142,17 @@
 
                 }).catch(err => {
 
-                        Swal.fire({
-                            title: 'error!',
-                            text: 'something went wrong..!',
-                            icon: 'error',
-                            showCancelButton: true
-                        })
-
+                    Swal.fire({
+                        title: 'error!',
+                        text: 'something went wrong..!',
+                        icon: 'error',
+                        showCancelButton: true
                     })
 
-            }
-        },
-        filters: {
-            moment: function (date) {
+                })
+
+            },
+            formateDate(date) {
                 return moment(date).format('MMMM Do YYYY, h:mm:ss a');
             }
         },

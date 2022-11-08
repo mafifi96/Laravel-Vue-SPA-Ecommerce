@@ -31,12 +31,12 @@
                                         {{product.title}}</router-link>
                                 </td>
                                 <td>{{product.pivot.quantity}}</td>
-                                <td>&dollar;{{product.price | currency}}</td>
-                                <td>{{order.created_at | moment }}</td>
+                                <td>&dollar;{{currency(product.price)}}</td>
+                                <td>{{formateDate(order.created_at) }}</td>
                             </tr>
                             <tr>
                                 <td colspan="3">Total Price</td>
-                                <td colspan="1">&dollar;{{order.total_price | currency}}</td>
+                                <td colspan="1">&dollar;{{currency(order.total_price)}}</td>
                             </tr>
                             <tr>
                                 <td colspan="4">Status</td>
@@ -69,7 +69,8 @@
 </template>
 
 <script>
-    import moment from 'moment'
+import moment from 'moment'
+
     export default {
         data: function () {
             return {
@@ -107,14 +108,11 @@
                     console.log(err)
                 })
 
-            }
-
-        },
-        filters: {
-            moment: function (date) {
+            },
+            formateDate(date) {
                 return moment(date).format('MMMM Do YYYY, h:mm:ss a');
             },
-            currency: function (value) {
+            currency(value) {
                 let val = (value / 1).toFixed(2).replace('.', ',')
                 return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
             }

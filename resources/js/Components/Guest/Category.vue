@@ -4,12 +4,19 @@
     <div class="col-md-10 col-lg-10 col-sm-12 ">
         <div class="container">
             <div class="row">
-            <Spinner v-show="loading"></Spinner>
+                <Spinner v-show="loading"></Spinner>
                 <!-- Products -->
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="row">
-                    <h6 v-show="products.products.length" class="mb-3 text-center"><strong>{{products.products.length}}
-                    </strong> {{ products.products.length > 1 ? "products" : "product"}} in <strong>{{products.name}}</strong> category </h6>
+                        <h6 v-show="products.products.length" class="mb-3 text-center">
+                            <strong>
+                            {{products.products.length}}
+                            </strong>
+                            {{ products.products.length > 1 ? "products" : "product"}}
+                             in
+                            <strong>
+                            {{products.name}}
+                            </strong> category </h6>
                         <div class="col-md-12 col-sm-12 col-lg-6 mb-3 " v-for=" product in products.products"
                             :key="product.id">
 
@@ -41,7 +48,8 @@
                                                 <div class="col-md-8 justify-content-">
                                                     <div class="form-group">
                                                         <input type="number" class="form-control" name="quantity"
-                                                            value="" :placeholder="'in stock ' + product.quantity "
+                                                            value=""
+                                                             :placeholder="'in stock ' + product.quantity "
                                                             :max=product.quantity>
                                                     </div>
                                                 </div>
@@ -59,7 +67,8 @@
 
                             </div>
                         </div>
-                        <h6 v-show="!products.products.length && !loading" class="text-capitalize text-center">no products in
+                        <h6 v-show="!products.products.length && !loading" class="text-capitalize text-center">no
+                            products in
                             <strong>{{products.name}}</strong> category </h6>
                     </div>
                 </div>
@@ -73,8 +82,7 @@
 </template>
 
 <script>
-
-import Spinner from '../inc/Spinner'
+    import Spinner from '../inc/Spinner'
 
     export default {
 
@@ -83,10 +91,10 @@ import Spinner from '../inc/Spinner'
                 products: [],
                 Id: this.$route.params.id,
                 title: this.$route.params.name,
-                loading : true
+                loading: true
             }
         },
-        components : {
+        components: {
             Spinner
         },
         methods: {
@@ -95,7 +103,7 @@ import Spinner from '../inc/Spinner'
                 await axios.get("/api/categories/" + this.Id).then(res => {
                     this.products = res.data;
                     this.loading = false
-                    document.title = "Store | Category - "+ this.products.name
+                    document.title = "Store | Category - " + this.products.name
 
                 }).catch(err => {
                     console.log(err)
@@ -109,8 +117,7 @@ import Spinner from '../inc/Spinner'
 
                 let Quantity = fm.value;
 
-                if ((Quantity == '' && !isNaN(Quantity)) || (Quantity >= 1 && !isNaN(Quantity)))
-                {
+                if ((Quantity == '' && !isNaN(Quantity)) || (Quantity >= 1 && !isNaN(Quantity))) {
 
                     Quantity = (Quantity == '') ? 1 : Quantity;
 

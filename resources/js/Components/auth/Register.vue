@@ -1,9 +1,8 @@
 <template>
-    <div class="col-md-10 col-lg-10 col-sm-12 ">
-        <div class="container">
+
             <div class="row justify-content-center">
-                <div class="col-md-6 ">
-                    <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <div class="card o-hidden border-0 shadow">
                         <div class="card-body p-0">
                             <!-- Nested Row within Card Body -->
 
@@ -68,8 +67,6 @@
                 </div>
             </div>
 
-        </div>
-    </div>
 
 </template>
 

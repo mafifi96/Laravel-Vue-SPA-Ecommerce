@@ -1,17 +1,14 @@
 <template>
 
-    <div class="col-md-10 col-lg-10 col-sm-12 ">
-        <div class="container">
+    <h3 class="text-dark text-capitalize mb-3 d-block">latest products</h3>
             <div class="row">
-                <Spinner v-show="loading"></Spinner>
 
+                <Spinner v-show="loading"></Spinner>
                 <!-- Products -->
 
-                <div class="col-md-12 col-lg-12 col-sm-12">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-lg-6 mb-3 " v-for=" product in products" :key="product.id">
+                        <div class="col-md-4 col-sm-12 col-lg-4 mb-3 " v-for=" product in products" :key="product.id">
 
-                            <div class="product mb-2 shadow-sm j">
+                            <div class="product mb-2 shadow-sm ">
                                 <div class="pro-header mb-1">
                                     <router-link :to="{ name :'product', params : {id : product.id } }">
                                         <img :src="'/storage/'+ product.images[0].image" style="height:40vh;"
@@ -56,19 +53,14 @@
                             </div>
                         </div>
 
-                    </div>
-                </div>
             </div>
-        </div>
-
-
-    </div>
 
 </template>
 
 <script>
 
 import Spinner from './Spinner'
+
     export default {
 
         data() {

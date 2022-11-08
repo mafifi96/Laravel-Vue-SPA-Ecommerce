@@ -30,13 +30,14 @@
                             <tbody>
                                 <tr v-for="(order,index) in orders" :key="index">
                                     <td scope="row">
-                                        <router-link :to="{name :'admin.orders.order', params :{id : order.id}}">{{order.id}}
+                                        <router-link :to="{name :'admin.orders.order', params :{id : order.id}}">
+                                            {{order.id}}
                                         </router-link>
                                     </td>
                                     <td>{{order.status}}</td>
-                                    <td>&dollar;{{order.total_price | currency}}</td>
+                                    <td>&dollar;{{currency(order.total_price) }}</td>
                                     <td>{{order.user.name}}</td>
-                                    <td>{{order.created_at | moment }}</td>
+                                    <td>{{formateDate(order.created_at)}}</td>
 
                                 </tr>
                             </tbody>
@@ -51,7 +52,7 @@
 </template>
 
 <script>
-    import moment from 'moment'
+import moment from 'moment'
 
     export default {
 
@@ -69,13 +70,11 @@
                 }).catch(err => {
                     console.log(err)
                 })
-            }
-        },
-        filters: {
-            moment: function (date) {
+            },
+            formateDate(date) {
                 return moment(date).format('MMMM Do YYYY, h:mm:ss a');
             },
-            currency: function (value) {
+            currency(value) {
                 let val = (value / 1).toFixed(2).replace('.', ',')
                 return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
             }

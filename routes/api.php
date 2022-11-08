@@ -3,7 +3,6 @@
 use App\Http\Controllers\CheckerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Category;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\AuthController;
@@ -13,12 +12,11 @@ use App\Http\Controllers\GuestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Api\CartController As ApiCart;
 use App\Http\Controllers\Api\OrderController;
-use App\Models\Product;
+use App\Http\Controllers\Api\SliderController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user()->load('roles');
 });
-
 
 Route::middleware('api','admin')->group(function(){
     Route::get("/products/create" , [ProductController::class , 'create']);
@@ -41,9 +39,7 @@ Route::post('/session', function () {
 //general routes
 Route::apiResource('products', ProductController::class);
 Route::apiResource('categories', CategoryController::class);
-Route::post("/productss/{product}", function(Request $request , Product $product ){
-    return response()->json(dd($request->all()));
-});
+Route::get("/slider", [SliderController::class , 'index']);
 /* -- */
 
 Route::get('/brand/{brand}', [GuestController::class, 'brand'])->where(['brand' => '[0-9]+']);

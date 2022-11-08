@@ -9,11 +9,12 @@ use App\Http\Controllers\GuestController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;*/
 
-Route::get('/{any}', function()
-{
-return view("app");
-}
-)->where('any','.*');
+Route::get(
+    '/{any}',
+    function () {
+        return view("app");
+    }
+)->where('any', '.*');
 /*
 Route::get('/', [GuestController::class , 'index']);
 Route::get('/product/{product}', [GuestController::class , 'product']);

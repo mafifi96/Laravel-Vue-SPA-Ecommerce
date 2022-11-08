@@ -1,14 +1,8 @@
 <template>
 
-    <div class="col-md-10 col-lg-10 col-sm-12 ">
-        <div class="row">
-            <div class="container">
-                <!-- Outer Row -->
-                <div class="row justify-content-center">
-
-                    <div class=" col-md-6">
-
-                        <div class="card o-hidden border-0 shadow-lg my-5">
+<div class="row justify-content-center">
+<div class="col-lg-7 col-md-7 col-sm-12">
+                        <div class="card o-hidden border-0 shadow shadow-y-sm">
                             <div class="card-body p-0">
                                 <!-- Nested Row within Card Body -->
                                 <div class="row">
@@ -65,15 +59,8 @@
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-
+</div>
+</div>
 </template>
 
 <script>
@@ -105,9 +92,9 @@
                 this.processing = true
                 await axios.get('/sanctum/csrf-cookie')
                 await axios.post('/api/login', this.creds).then(res => {
-                    console.log("token "+res.data.token)
-                    console.log("user "+res.data.user)
-                    window.axios.defaults.headers.common = {'Authorization': `Bearer ${res.data.token}`}
+
+                   // window.axios.defaults.headers.common = {'Authorization': `Bearer ${res.data.token}`}
+
                     this.signIn()
 
                 }).catch(err => {

@@ -13,7 +13,7 @@ import Brand from '../Components/Guest/Brand'
 
 import Search from '../Components/Guest/Search'
 
-import Product from '../Components/Guest/Product'
+import CProduct from '../Components/Guest/Product'
 
 import Cart from '../Components/Guest/Cart'
 
@@ -29,7 +29,7 @@ const routes = [
     {
         path: '/product/:id(\\d+)',
         name : 'product',
-        component : Product
+        component : CProduct
     },
     {
         path: '/category/:id(\\d+)/:name(\\w+)',

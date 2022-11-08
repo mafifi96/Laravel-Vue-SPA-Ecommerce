@@ -1,6 +1,5 @@
 <template>
-    <div class="col-md-9 col-lg-9 col-sm-12">
-        <div class="container">
+
             <div class="row ">
                 <Spinner v-show="loading"></Spinner>
                 <!-- Product -->
@@ -17,7 +16,6 @@
                             <h2 class="text-capitalize" :title=product.title>
                                 {{ product.title }}
                             </h2>
-
                             <p style="font-weight:800;color:#000;">&dollar;{{ product.price }}</p>
                             <p style="font-weight:400;color:#000;">Brand -
                                 <router-link
@@ -56,22 +54,21 @@
                 </div>
 
             </div>
-        </div>
-    </div>
 
 
 
 </template>
 
 <script>
-
     import Spinner from '../inc/Spinner'
 
     export default {
 
         data: function () {
             return {
-                product: {},
+                product: {
+                    type : Object
+                },
                 id: this.$route.params.id,
                 loading: true
             }
@@ -79,17 +76,27 @@
         components: {
             Spinner
         },
+        mounted() {
+
+this.getProduct()
+},
         methods: {
-            getProduct() {
-                axios.get("/api/products/" + this.id).then(res => {
+           async getProduct() {
+                await axios.get("/api/products/" + this.id).then(res => {
+
                     this.product = res.data.product
-                    this.loading = false
-                    document.title = "Store | " + this.product.title
+                    console.log("fetched")
+                    console.log(res.data.product)
 
                 }).catch(err => {
                     console.log(err)
+                    console.log("error")
+                    this.$router.push({
+                        name : '404'
+                    })
+                }).finally(()=>{
+                    this.loading = false
                 })
-
 
             },
             addToCart(e) {
@@ -125,12 +132,7 @@
                 }
 
             }
-        },
-        mounted() {
-            this.getProduct()
-
         }
-
     }
 
 </script>

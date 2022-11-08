@@ -86,7 +86,7 @@ import Spinner from '../inc/Spinner'
         methods: {
 
             getProducts() {
-                axios.get("http://127.0.0.1:8000/api/search?q=" + this.name).then(res => {
+                axios.get("/api/search?q=" + this.name).then(res => {
 
                     this.products = res.data;
                     this.loading = false

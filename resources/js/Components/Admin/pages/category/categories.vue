@@ -38,8 +38,8 @@
                                         <router-link :to="{name : 'admin.category' , params : {id : category.id}}"
                                             class="btn text-decoration-none">{{category.name}}</router-link>
                                     </td>
-                                    <td>{{category.created_at | moment}}</td>
-                                    <td>{{category.updated_at | moment}}</td>
+                                    <td>{{formateDate(category.created_at)}}</td>
+                                    <td>{{formateDate(category.updated_at)}}</td>
                                 </tr>
 
                             </tbody>
@@ -54,7 +54,7 @@
 
 </template>
 <script>
-    import moment from 'moment'
+import moment from 'moment'
 
     export default {
         data: function () {
@@ -71,11 +71,9 @@
                 }).catch(err => {
                     console.log(err)
                 })
-            }
-        },
-        filters: {
-            moment: function (date) {
-                return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+            },
+            formateDate(value){
+                return moment(value).format('MMMM Do YYYY, h:mm:ss a');
             }
         },
         mounted() {
