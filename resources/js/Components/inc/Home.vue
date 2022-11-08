@@ -1,88 +1,82 @@
 <template>
 
-                    <div class="col-md-10 col-lg-10 col-sm-12 ">
-                        <div class="container">
-                            <div class="row">
-                                <!-- Products -->
-                                <div class="col-md-12 col-lg-12 col-sm-12">
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-lg-6 mb-3 " v-for=" product in products"
-                                            :key="product.id">
+    <h3 class="text-dark text-capitalize mb-3 d-block">latest products</h3>
+            <div class="row">
 
-                                            <div class="product mb-2 shadow-sm j">
-                                                <div class="pro-header mb-1">
-                                                    <router-link :to="{ name :'product', params : {id : product.id } }">
-                                                        <img :src="'/storage/'+ product.images[0].image"
-                                                            style="height:40vh;" class="img-fluid card-img-top"
-                                                            alt="placeholder">
+                <Spinner v-show="loading"></Spinner>
+                <!-- Products -->
 
-                                                    </router-link>
-                                                </div>
+                        <div class="col-md-4 col-sm-12 col-lg-4 mb-3 " v-for=" product in products" :key="product.id">
 
-                                                <div class="pro-body mb-1 p-2">
-                                                    <h5 :title=" product.title ">
-                                                        <router-link
-                                                            :to="{ name :'product', params : {id : product.id } }"
-                                                            style="color:#555;font-weight:400"
-                                                            class="text-decoration-none text-left text-capitalize">
-                                                            {{ product.title }}
-                                                        </router-link>
-                                                    </h5>
-                                                    <p style="font-weight:800;color:#000;">&dollar;{{ product.price }}</p>
+                            <div class="product mb-2 shadow-sm ">
+                                <div class="pro-header mb-1">
+                                    <router-link :to="{ name :'product', params : {id : product.id } }">
+                                        <img :src="'/storage/'+ product.images[0].image" style="height:40vh;"
+                                            class="img-fluid card-img-top" alt="placeholder">
 
-                                                    <div class="pro-add p-2">
+                                    </router-link>
+                                </div>
 
-                                                        <form method="post" name="add">
-                                                            <div class="row">
-                                                                <div class="col-md-8 justify-content-">
-                                                                    <div class="form-group">
-                                                                        <input type="number" class="form-control"
-                                                                            name="quantity" value=""
-                                                                            :placeholder="'in stock ' + product.quantity "
-                                                                            :max=product.quantity>
-                                                                    </div>
-                                                                </div>
+                                <div class="pro-body mb-1 p-2">
+                                    <h5 :title=" product.title ">
+                                        <router-link :to="{ name :'product', params : {id : product.id } }"
+                                            style="color:#555;font-weight:400"
+                                            class="text-decoration-none text-left text-capitalize">
+                                            {{ product.title }}
+                                        </router-link>
+                                    </h5>
+                                    <p style="font-weight:800;color:#000;">&dollar;{{ product.price }}</p>
 
-                                                                <div class="col-md-2 pull-right">
-                                                                    <button @click.prevent="addToCart($event)"
-                                                                        :data-title=product.title
-                                                                        :data-price=product.price :data-id=product.id
-                                                                        class="btn btn-primary addtocart"
-                                                                        name="submit">Add</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
+                                    <div class="pro-add p-2">
 
+                                        <form method="post" name="add">
+                                            <div class="row">
+                                                <div class="col-md-8 justify-content-">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" name="quantity"
+                                                            value="" :placeholder="'in stock ' + product.quantity "
+                                                            :max=product.quantity>
                                                     </div>
                                                 </div>
 
+                                                <div class="col-md-2 pull-right">
+                                                    <button @click.prevent="addToCart($event)" :data-title=product.title
+                                                        :data-price=product.price :data-id=product.id
+                                                        class="btn btn-primary addtocart" name="submit">Add</button>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </form>
 
                                     </div>
                                 </div>
+
                             </div>
                         </div>
 
-
-                    </div>
+            </div>
 
 </template>
 
 <script>
+
+import Spinner from './Spinner'
 
     export default {
 
         data() {
             return {
                 products: [],
+                loading: true
             }
         },
-
+        components: {
+            Spinner
+        },
         methods: {
             getProducts() {
-                axios.get("http://127.0.0.1:8000/api/products").then(res => {
+                axios.get("/api/products").then(res => {
                     this.products = res.data;
+                    this.loading = false
                 }).catch(err => {
                     console.log(err)
                 })
@@ -99,7 +93,7 @@
 
                     Quantity = (Quantity == '') ? 1 : Quantity;
 
-                    axios.post("http://127.0.0.1:8000/api/cart/add", {
+                    axios.post("/api/cart/add", {
                         product_id: Id,
                         quantity: Quantity,
                     }).then(res => {
@@ -133,5 +127,7 @@
 
 
 <style scoped>
+
+
 
 </style>

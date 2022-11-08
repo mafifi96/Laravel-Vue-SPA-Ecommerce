@@ -1,14 +1,8 @@
 <template>
 
-    <div class="col-md-10 col-lg-10 col-sm-12 ">
-        <div class="row">
-            <div class="container">
-                <!-- Outer Row -->
-                <div class="row justify-content-center">
-
-                    <div class=" col-md-6">
-
-                        <div class="card o-hidden border-0 shadow-lg my-5">
+<div class="row justify-content-center">
+<div class="col-lg-7 col-md-7 col-sm-12">
+                        <div class="card o-hidden border-0 shadow shadow-y-sm">
                             <div class="card-body p-0">
                                 <!-- Nested Row within Card Body -->
                                 <div class="row">
@@ -18,8 +12,13 @@
                                             <div class="text-center">
                                                 <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                             </div>
-                                            <div v-show="errors && errors.msg" class="alert alert-danger">
-                                                {{ errors.msg }}
+                                            <div class="alert alert-danger"
+                                                v-if="errors && (errors.email || errors.password || errors.message)">
+                                                <div v-for="(v, k) in errors" :key="k">
+                                                    <p v-for="error in v" :key="error" class="text-sm">
+                                                        {{ error }}
+                                                    </p>
+                                                </div>
                                             </div>
 
                                             <form class="user" @submit.prevent="login" method="post">
@@ -60,35 +59,28 @@
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-
+</div>
+</div>
 </template>
 
 <script>
-    import ValidationErrors from '../inc/ValidationErrors.vue'
+
     import {
         mapActions
     } from 'vuex'
 
+
     export default {
-        components: {
-            ValidationErrors
-        },
+
         data() {
             return {
-                errors: {},
+                errors: null,
                 creds: {
                     email: '',
                     password: '',
                 },
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+
                 processing: false
             }
         },
@@ -98,18 +90,21 @@
             }),
             async login() {
                 this.processing = true
-                await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie')
-                await axios.post('http://127.0.0.1:8000/api/login', this.creds).then(res => {
+                await axios.get('/sanctum/csrf-cookie')
+                await axios.post('/api/login', this.creds).then(res => {
+
+                   // window.axios.defaults.headers.common = {'Authorization': `Bearer ${res.data.token}`}
 
                     this.signIn()
 
                 }).catch(err => {
-                    this.errors = err;
+                    this.errors = err.response.data.errors;
+                    console.log(err)
                 }).finally(() => {
                     this.processing = false
                 })
             },
-             redirectAuth() {
+            redirectAuth() {
                 if (this.$store.getters.isAdmin) {
                     this.$router.push({
                         name: 'dashboard'
@@ -122,13 +117,17 @@
                 }
             }
         },
-        watch:{
-            '$store.getters.authenticated' : function(){
+        watch: {
+            '$store.getters.authenticated': function () {
                 this.redirectAuth()
             }
         },
+        created(){
+            document.title = "Store | Login"
+        },
         mounted() {
             this.redirectAuth()
+
         }
 
     }

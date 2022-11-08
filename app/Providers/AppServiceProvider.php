@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\Category;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::directive('ifadmin' , function()
+        /* Blade::directive('ifadmin' , function()
         {
             return "<?php
 
@@ -47,7 +48,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         view()->share('categories', Category::all());
-
+*/
         \Illuminate\Pagination\Paginator::useBootstrap();
+        Model::preventLazyLoading();
+
     }
 }

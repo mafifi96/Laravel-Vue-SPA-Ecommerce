@@ -116,7 +116,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" @click.prevent="dropdownToggle()" id="userDropdown" role="button" data-toggle="dropdown">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ AuthUser.name }}</span>
-                                <img class="img-profile rounded-circle" src="imgs/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="/storage/assets/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -202,6 +202,7 @@
             }),
             async logout() {
                 await axios.post('/api/logout').then(res => {
+                    //window.axios.defaults.headers.common = {'Authorization': ''}
                     this.signout()
                     this.$router.push({
                         name: "login"
@@ -219,29 +220,9 @@
 
     }
 
-/*
-$(function() {
-
-    $("#sidebarToggleTop").click(function(e) {
-        e.preventDefault();
-        $(".sidebar").toggleClass("toggled");
-    });
-
-    $("#userDropdown").click(function(e) {
-        e.preventDefault();
-        $(".dropdown-menu").slideToggle();
-    });
-
- });
- */
 </script>
 
 <style scoped>
-    /* @import '../../Components/Admin/assets/css/all.min.css';
-@import'../../Components/Admin/assets/css/fontawesome.min.css';
-@import'../../Components/Admin/assets/css/styles.css';
-@import'../../Components/Admin/assets/css/bootstrap.min.css';
-@import'../../Components/Admin/assets/css/sb-admin-2.min.css';
- */
+
 
 </style>

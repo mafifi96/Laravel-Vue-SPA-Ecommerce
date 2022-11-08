@@ -42,11 +42,13 @@ class UserController extends Controller
 
     public function customer()
     {
-        $carts = Auth::user()->cart;
+        $products = Auth::user()->cart;
 
         $total_price = Cart::where("user_id", Auth::id())->sum('price');
 
-        return view('customer.profile', ['carts' => $carts, 'total_price' => $total_price]);
+       // return view('customer.profile', ['products' => $products, 'total_price' => $total_price]);
+
+       return response()->json(['products' => $products , 'totalPrice' => $total_price],200);
 
     }
 
@@ -70,10 +72,6 @@ class UserController extends Controller
 
         $session_id = session()->getId();
 
-        $request->validate([
-
-        ]);
-
         $user = User::create($request->validated());
 
         $user->assignRole("customer");
@@ -86,7 +84,7 @@ class UserController extends Controller
 
         $cart = DB::update('update carts set user_id = ? where session_id = ?', [$u_id, $session_id]);
 
-        return redirect("/customer");
+        return response()->json(['message' => 'user logged in successfully' , 'status' => true],200);
     }
 
     public function user_orders($id)
@@ -102,5 +100,6 @@ class UserController extends Controller
         return view("customer.orders", ['orders' => $orders, 'total_price' => $user->orders->sum('total_price')]);
 
     }
+
 
 }

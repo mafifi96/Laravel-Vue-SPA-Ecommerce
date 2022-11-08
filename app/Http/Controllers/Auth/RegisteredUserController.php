@@ -52,20 +52,25 @@ class RegisteredUserController extends Controller
 
         $user->assignRole("customer");
 
-        event(new Registered($user));
+        //event(new Registered($user));
 
         Auth::login($user);
-        
+
         $u_id = auth()->id();
 
         if(Cart::where('session_id',$session_id)->count('product_id') != 0)
         {
             $cart = DB::update('update carts set user_id = ? where session_id = ?', [$u_id , $session_id]);
 
-            return redirect("/customer");
+            //return redirect("/customer");
         }
 
-        return RouteServiceProvider::redirectAuth();
+        $token = auth()->user()->createToken('Token')->plainTextToekn;
+
+
+        return response()->json(['message' => 'user registerd successfully' ,'token' => $token, 'status'=> true],200);
+
+        //return RouteServiceProvider::redirectAuth();
     }
 
 }

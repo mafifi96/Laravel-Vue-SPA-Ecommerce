@@ -79,7 +79,10 @@ export default {
         total_sales : 0,
         total_orders : 0,
         total_customers:0
-      })
+      }),
+      mounted (){
+          document.title = "Store | Dashboard"
+      }
 
 }
 

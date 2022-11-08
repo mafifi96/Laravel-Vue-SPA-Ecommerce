@@ -7,44 +7,71 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Cart;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
 
-        if (Auth::attempt($credentials)) {
+
+        $request->authenticate();
+
+        if (Auth::check()) {
+            $sessions['notlogged'] = session()->getId();
+
+            $user = Cart::where("session_id", $sessions['notlogged'])
+                ->update([
+                    'user_id' => Auth::id()
+                ]);
+
             $request->session()->regenerate();
 
-            return response()->json(['msg' => "user exists"], 200);
-        }else{
+            $token = auth()->user()->createToken('Token')->plainTextToken;
 
-        return response()->json([
-            'msg' => 'The provided credentials do not match our records.'
-        ],400);
-    }
+            return response()->json([
+                'user' => Auth::user()->with('roles'), 'token' => $token
+            ]);
+        }
     }
 
     public function register(Request $request)
     {
-        $credentials = $request->validate([
-            'name' => ['required'],
-            'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', 'min:8']
+        $session_id = session()->getId();
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => ['required',  Password::defaults()],
         ]);
 
-        User::create([
-            'email' => $credentials['email'],
-            'password' => Hash::make($credentials['password']),
-            'name' => $credentials['name']
-        ]);
 
-        return response()->json([
-            'msg' => 'Successfully registered',
-        ], 200);
+        DB::transaction(function () use ($request, $session_id) {
+
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+
+            $user->assignRole("customer");
+
+            //event(new Registered($user));
+
+            Auth::login($user);
+
+            if (Cart::where('session_id', $session_id)->count('product_id') != 0) {
+                $cart = DB::update('update carts set user_id = ? where session_id = ?', [$user->id, $session_id]);
+            }
+        });
+
+        $token = auth()->user()->createToken('Token')->plainTextToken;
+
+        return response()->json(['message' => 'user registerd successfully', 'token' => $token], 200);
+
+        //return response(200);
     }
 }

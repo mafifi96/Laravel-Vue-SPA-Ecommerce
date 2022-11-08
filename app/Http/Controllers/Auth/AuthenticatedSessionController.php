@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
+use Illuminate\Support\Facades\DB;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,22 +30,27 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        //$sessions['notloged'] = session()->getId();
-
+        $sessions['notlogged'] = session()->getId();
 
         $request->authenticate();
 
-        /*$user = Cart::where("session_id" , $sessions['notloged'])
-        ->update([
-                'user_id' => Auth::id()
-        ]);
-*/
-        //$request->session()->regenerate();
+        DB::transaction(function () use ($request, $sessions) {
 
-        $token = auth()->user()->createToken('Token');
+            $user = Cart::where("session_id" , $sessions['notlogged'])
+            ->update([
+                'user_id' => Auth::id()
+            ]);
+
+            $request->session()->regenerate();
+
+        });
+
+        $token = auth()->user()->createToken('Token')->plainTextToken;
+
 
         return response()->json([
-            'user' => Auth::user()->with('roles'), 'token' => $token->plainTextToken]);
+            'loggedIn' => true, 'token' => $token , 'user' => auth()->user()->id]);
+
     }
 
     /**
@@ -55,7 +61,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        auth()->logout();
+        //auth()->user()->tokens()->delete();
+            Auth::guard('web')->logout();
+
 
        // $request->session()->invalidate();
 

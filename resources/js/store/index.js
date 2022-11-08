@@ -1,21 +1,17 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import {createStore} from 'vuex'
+
 import createPersistedState from 'vuex-persistedstate'
 
-
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+const store = createStore({
     plugins: [
         createPersistedState()
     ],
-    state: {
-
+    state(){
+    return {
         CartQuantity: 0,
         authenticated: false,
         user: {}
-
-    },
+    }},
     mutations: {
 
         UPDATE_QUANTITY(state, payload) {
@@ -27,41 +23,44 @@ export default new Vuex.Store({
         SET_USER(state, payload) {
             state.user = payload
         }
+
     },
     actions: {
-        Quantity({
-            commit
-        }) {
+
+        Quantity(context) {
             axios.post("/api/cart/quantity").then(res => {
 
-                commit("UPDATE_QUANTITY", Number(res.data.quantity))
+                context.commit("UPDATE_QUANTITY", Number(res.data.quantity))
+
+            }).catch(err=>{
+
+                console.log(err)
 
             })
         },
 
-        login({
-            commit
-        }) {
-            return axios.get('/api/user').then(res => {
+        login({commit}) {
+                axios.get('/api/user').then(res => {
+
                 commit('SET_USER', res.data)
                 commit('SET_AUTHENTICATED', true)
 
             }).catch(err => {
-                console.log(err)
+
                 commit('SET_USER', {})
                 commit('SET_AUTHENTICATED', false)
 
             })
         },
-        logout({
-            commit
-        }) {
+        logout({commit}) {
             commit('SET_USER', {})
             commit('SET_AUTHENTICATED', false)
         }
     },
     getters: {
-
+        quantity(state){
+            return state.CartQuantity
+        },
         authenticated(state) {
             return state.authenticated
         },
@@ -69,13 +68,18 @@ export default new Vuex.Store({
             return state.user
         },
         isAdmin(state) {
+            if(Object.keys(state.user).length != 0 ){
             return state.user.roles[0].name == "admin" ? true : false;
+            }
+            return false
         },
         isCustomer(state) {
-
+            if(Object.keys(state.user).length != 0 ){
             return state.user.roles[0].name == "customer" ? true : false;
-
+            }
+            return false
         }
-
     }
 })
+
+export default store

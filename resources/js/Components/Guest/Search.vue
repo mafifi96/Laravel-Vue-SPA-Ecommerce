@@ -2,6 +2,7 @@
     <div class="col-md-10 col-lg-10 col-sm-12 ">
         <div class="container">
             <div class="row">
+            <Spinner v-show="loading"></Spinner>
                 <!-- Products -->
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="row">
@@ -15,7 +16,6 @@
                                             class="img-fluid card-img-top" alt="placeholder">
 
                                     </router-link>
-
 
                                 </div>
 
@@ -68,21 +68,28 @@
 </template>
 
 <script>
+
+import Spinner from '../inc/Spinner'
+
     export default {
 
         data() {
             return {
                 products: [],
-                name: this.$route.query.q
+                name: this.$route.query.q,
+                loading : true
             }
         },
-
+        components :{
+            Spinner
+        },
         methods: {
 
             getProducts() {
-                axios.get("http://127.0.0.1:8000/api/search?q=" + this.name).then(res => {
+                axios.get("/api/search?q=" + this.name).then(res => {
 
                     this.products = res.data;
+                    this.loading = false
 
                 }).catch(err => {
                     console.log(err)
@@ -100,7 +107,7 @@
 
                     Quantity = (Quantity == '') ? 1 : Quantity;
 
-                    axios.post("http://127.0.0.1:8000/api/cart/add", {
+                    axios.post("/api/cart/add", {
                         product_id: Id,
                         quantity: Quantity,
                     }).then(res => {
@@ -128,10 +135,12 @@
             $route(to, from) {
                 this.name = this.$route.query.q
                 this.getProducts()
+                document.title = "Store | " + this.name
             }
         },
         created() {
             this.getProducts();
+            document.title = "Store | " + this.name
         }
     }
 

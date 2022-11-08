@@ -4,14 +4,25 @@
     <div class="col-md-10 col-lg-10 col-sm-12 ">
         <div class="container">
             <div class="row">
+                <Spinner v-show="loading"></Spinner>
                 <!-- Products -->
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="row">
-                        <div class="col-md-12 col-sm-12 col-lg-6 mb-3 " v-for=" product in products.products" :key="product.id">
+                        <h6 v-show="products.products.length" class="mb-3 text-center">
+                            <strong>
+                            {{products.products.length}}
+                            </strong>
+                            {{ products.products.length > 1 ? "products" : "product"}}
+                             in
+                            <strong>
+                            {{products.name}}
+                            </strong> category </h6>
+                        <div class="col-md-12 col-sm-12 col-lg-6 mb-3 " v-for=" product in products.products"
+                            :key="product.id">
 
                             <div class="product mb-2 shadow-sm j">
                                 <div class="pro-header mb-1">
-                                     <router-link :to="{ name :'product', params : {id : product.id } }">
+                                    <router-link :to="{ name :'product', params : {id : product.id } }">
                                         <img :src="'/storage/'+ product.images[0].image" style="height:40vh;"
                                             class="img-fluid card-img-top" alt="placeholder">
 
@@ -38,14 +49,14 @@
                                                     <div class="form-group">
                                                         <input type="number" class="form-control" name="quantity"
                                                             value=""
-                                                            :placeholder="'in stock ' + product.quantity "
-                                                            :max= product.quantity>
+                                                             :placeholder="'in stock ' + product.quantity "
+                                                            :max=product.quantity>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-2 pull-right">
-                                                    <button  @click.prevent="addToCart($event)" :data-title= product.title
-                                                        :data-price= product.price :data-id= product.id
+                                                    <button @click.prevent="addToCart($event)" :data-title=product.title
+                                                        :data-price=product.price :data-id=product.id
                                                         class="btn btn-primary addtocart" name="submit">Add</button>
                                                 </div>
                                             </div>
@@ -56,7 +67,9 @@
 
                             </div>
                         </div>
-<!-- <h3 v-if="(!products.length)" class=" alert alert-info text-capitalize text-center">no products in this category</h3> -->
+                        <h6 v-show="!products.products.length && !loading" class="text-capitalize text-center">no
+                            products in
+                            <strong>{{products.name}}</strong> category </h6>
                     </div>
                 </div>
             </div>
@@ -69,23 +82,29 @@
 </template>
 
 <script>
+    import Spinner from '../inc/Spinner'
 
     export default {
 
         data() {
             return {
                 products: [],
-                Id : this.$route.params.id,
-                title : this.$route.params.name,
-
+                Id: this.$route.params.id,
+                title: this.$route.params.name,
+                loading: true
             }
         },
-
+        components: {
+            Spinner
+        },
         methods: {
-            getProducts() {
-                axios.get("http://127.0.0.1:8000/api/categories/" + this.Id ).then(res => {
+            async getProducts() {
+
+                await axios.get("/api/categories/" + this.Id).then(res => {
                     this.products = res.data;
-                    console.log(res.data)
+                    this.loading = false
+                    document.title = "Store | Category - " + this.products.name
+
                 }).catch(err => {
                     console.log(err)
                 })
@@ -102,7 +121,7 @@
 
                     Quantity = (Quantity == '') ? 1 : Quantity;
 
-                   axios.post("http://127.0.0.1:8000/api/cart/add", {
+                    axios.post("/api/cart/add", {
                         product_id: Id,
                         quantity: Quantity,
                     }).then(res => {
@@ -113,7 +132,7 @@
 
                     }).catch(err => {
 
-                            console.log(err.data.message)
+                        console.log(err.data.message)
 
                     })
 
@@ -124,24 +143,20 @@
                     return;
                 }
 
-            },
-            getTitle()
-            {
-                document.title = "Store | " + this.title
-
             }
-        }
-        ,
+        },
         watch: {
             $route(to, from) {
                 this.Id = this.$route.params.id
                 this.getProducts()
+                this.emptyProducts
+
+
             }
         },
-
         mounted() {
             this.getProducts()
-           // this.getTitle()
+
         },
     }
 
