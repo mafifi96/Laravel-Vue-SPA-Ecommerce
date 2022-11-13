@@ -17,9 +17,9 @@
     <template v-if="emptyCart && !loading">
         <h6 class="text-center mt-3 mb-3">Your Cart Is Empty</h6>
     </template>
-    <template v-if="products.length && !loading">
+    <template v-if="products?.length && !loading">
         <div class="px-2 mt-3 d-flex justify-content-center">
-            <router-link :to="{name : 'checkout'}" class="btn btn-primary">Checkout
+            <router-link :to="{name : 'register'}" class="btn btn-primary">Checkout
             </router-link>
         </div>
     </template>

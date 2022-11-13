@@ -115,7 +115,7 @@
 
                 } else if (this.$store.getters.isCustomer) {
                     this.$router.push({
-                        name: 'customer'
+                        name: 'profile'
                     })
                 }
             }

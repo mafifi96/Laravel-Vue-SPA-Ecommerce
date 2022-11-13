@@ -93,7 +93,7 @@
                 await axios.get('/sanctum/csrf-cookie')
                 await axios.post('/api/login', this.creds).then(res => {
 
-                   // window.axios.defaults.headers.common = {'Authorization': `Bearer ${res.data.token}`}
+                   //window.axios.defaults.headers.common = {'Authorization': `Bearer ${res.data.token}`}
 
                     this.signIn()
 

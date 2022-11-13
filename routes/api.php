@@ -28,6 +28,14 @@ Route::middleware('api','admin')->group(function(){
     Route::get('/admin/orders' , [OrderController::class , 'orders']);
     Route::get('/admin/orders/{order}',[OrderController::class , 'order']);
     Route::put('/admin/orders/{order}/status',[OrderController::class , 'updateStatus']);
+    Route::get("/admin/info", [UserController::class , 'index']);
+});
+
+Route::middleware(['api', 'customer'])->group(function () {
+
+Route::post('/customer/info', [UserController::class, 'customer_info']);
+Route::get('/customer/cart', [UserController::class, 'customerCart']);
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 
 });
 
@@ -48,7 +56,6 @@ Route::get("/cart", [CartController::class, 'index']);
 Route::post("/cart/add", [CartController::class, 'add']);
 Route::post("/cart/quantity", [CartController::class, 'cart_quantity']);
 Route::post("/cart/delete", [CartController::class, 'destroy']);
-Route::post('/customer/info', [UserController::class, 'customer_info']);
 
 // Auth Routes
 Route::post('/checkAuth', [CheckerController::class, 'Check']);

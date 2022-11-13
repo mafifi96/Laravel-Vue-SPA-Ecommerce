@@ -1,10 +1,7 @@
 <template>
-    <div class="col-md-9 col-lg-9 col-sm-12">
-        <div class="container">
-            <div class="row ">
-                <div class="col-md-12 col-sm-12 col-lg-12">
+    
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Checkout</h1>
+                        <h2 class="h3 mb-0 text-dark">Checkout</h2>
                     </div>
 
                     <div class="card">
@@ -59,16 +56,7 @@
                             </form>
                         </div>
                     </div>
-                </div>
-
-            </div>
-
-        </div>
-        <!-- /.container-fluid -->
-
-    </div>
-
-
+                    
 </template>
 <script>
 
@@ -105,11 +93,11 @@ import {mapActions} from 'vuex'
                 await axios.post("/api/customer/info" , this.formData).then(res=>{
 
                     this.signIn()
-
+                    
                     console.log(res.data.message + ' status ' + res.data.status )
 
                 }).catch(err => {
-                    consol.log(err)
+                    console.log(err)
                 }).finally(()=>{
                     this.processing = false
                 })

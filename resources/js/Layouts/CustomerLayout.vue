@@ -7,7 +7,7 @@
 
             <!-- Sidebar - Brand -->
             <router-link class="sidebar-brand d-flex align-items-center justify-content-center"
-                :to="{name :'dashboard'}">
+                :to="{name :'profile'}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>

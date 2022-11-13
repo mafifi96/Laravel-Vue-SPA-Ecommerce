@@ -13,36 +13,51 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
-    public function admin()
+    public function index()
     {
-        $total_orders = Order::count();
+        $total_products = Product::count();
 
-        $total_cutomers = User::count();
+        $total_cutomers = User::whereHas('roles', function($query){
+            $query->where('name','customer');
+        })->count();
+
+        $total_categories = Category::count();
 
         $total_sales = Order::sum("total_price");
 
         if ($total_sales < 1000000) {
 
             $total_sales = number_format($total_sales, 0, '.', ',') . "K";
-
         } elseif ($total_sales >= 1000000) {
 
             $total_sales = number_format($total_sales, 0, '.', ',') . "M";
         }
 
-        return view('admin.dashboard', ['total_customers' => $total_cutomers, 'total_orders' => $total_orders, 'total_sales' => $total_sales]);
+        return response()->json([
+            'total_customers' => $total_cutomers,
+            'total_products' => $total_products,
+            'total_sales' => $total_sales,
+            'total_categories' => $total_categories
+        ]
+        );
 
     }
 
-    public function customer()
+
+
+    public function customerCart()
     {
-        $products = Auth::user()->cart;
+
+        if(!empty(Auth::user()->cart))
+        {
+                $products = Auth::user()->cart;
+
+            }else{
+
+                $products =  Cart::where("session_id",session()->getId())->get();
+            }
+
 
         $total_price = Cart::where("user_id", Auth::id())->sum('price');
 

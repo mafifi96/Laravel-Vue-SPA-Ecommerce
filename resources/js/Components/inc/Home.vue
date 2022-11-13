@@ -9,11 +9,11 @@
                         <div class="col-md-4 col-sm-12 col-lg-4 mb-3 " v-for=" product in products" :key="product.id">
 
                             <div class="product mb-2 shadow-sm ">
-                                <div class="pro-header mb-1">
+                                <div class="pro-header mb-1 bg-light">
                                     <router-link :to="{ name :'product', params : {id : product.id } }">
-                                        <img :src="'/storage/'+ product.images[0].image" style="height:40vh;"
+                                        <!-- <img :src="'/storage/'+ product.images[0].image" style="height:40vh;"
                                             class="img-fluid card-img-top" alt="placeholder">
-
+ -->
                                     </router-link>
                                 </div>
 
