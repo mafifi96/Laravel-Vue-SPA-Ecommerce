@@ -206,7 +206,8 @@
         },
         computed: {
             ...mapGetters({
-                AuthUser: 'user'
+                AuthUser: 'user',
+                Token : 'token'
             })
         },
         methods: {
@@ -215,9 +216,11 @@
             }),
             async logout() {
                 await axios.post('/api/logout').then(res => {
+
                     window.axios.defaults.headers.common = {
-                        'Authorization': ''
+                        'Authorization': 'Bearer' + this.Token
                     }
+
                     this.signout()
                     this.$router.push({
                         name: "login"

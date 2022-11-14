@@ -10,6 +10,9 @@ use App\Http\Requests\CustomerRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Product;
+use App\Models\Category;
+
 
 class UserController extends Controller
 {
@@ -61,8 +64,6 @@ class UserController extends Controller
 
         $total_price = Cart::where("user_id", Auth::id())->sum('price');
 
-       // return view('customer.profile', ['products' => $products, 'total_price' => $total_price]);
-
        return response()->json(['products' => $products , 'totalPrice' => $total_price],200);
 
     }
@@ -74,13 +75,6 @@ class UserController extends Controller
         return view("admin.layouts.customer.customers" , ['customers' => $customers]);
     }
 
-    public function checkout()
-    {
-
-        if (Auth::check()) {return redirect("/customer");}
-        return view('guest.check');
-
-    }
 
     public function customer_info(CustomerRequest $request)
     {
@@ -100,20 +94,6 @@ class UserController extends Controller
         $cart = DB::update('update carts set user_id = ? where session_id = ?', [$u_id, $session_id]);
 
         return response()->json(['message' => 'user logged in successfully' , 'status' => true],200);
-    }
-
-    public function user_orders($id)
-    {
-        if (auth()->id() != $id) {return back();}
-
-        $user = User::findOrFail($id);
-
-        $orders = $user->orders;
-
-        $orders->load("products");
-
-        return view("customer.orders", ['orders' => $orders, 'total_price' => $user->orders->sum('total_price')]);
-
     }
 
 

@@ -87,7 +87,6 @@
                     email: '',
                     password: '',
                 },
-                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 processing: false
             }
         },

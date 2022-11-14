@@ -1,5 +1,5 @@
 <template>
-    
+
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h2 class="h3 mb-0 text-dark">Checkout</h2>
                     </div>
@@ -56,7 +56,7 @@
                             </form>
                         </div>
                     </div>
-                    
+
 </template>
 <script>
 
@@ -69,7 +69,6 @@ import {mapActions} from 'vuex'
             return {
                 errors: {},
                 processing : false,
-                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 formData: {
                     name: '',
                     email: '',
@@ -93,7 +92,7 @@ import {mapActions} from 'vuex'
                 await axios.post("/api/customer/info" , this.formData).then(res=>{
 
                     this.signIn()
-                    
+
                     console.log(res.data.message + ' status ' + res.data.status )
 
                 }).catch(err => {

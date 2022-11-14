@@ -119,7 +119,7 @@
                 categories: [],
                 brands: [],
                 errors: null,
-                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+
                 ID: this.$route.params.id
             }
         },

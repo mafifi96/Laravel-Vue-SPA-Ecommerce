@@ -79,8 +79,6 @@
                     email: '',
                     password: '',
                 },
-                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-
                 processing: false
             }
         },
@@ -94,7 +92,6 @@
                 await axios.post('/api/login', this.creds).then(res => {
 
                    //window.axios.defaults.headers.common = {'Authorization': `Bearer ${res.data.token}`}
-
                     this.signIn()
 
                 }).catch(err => {

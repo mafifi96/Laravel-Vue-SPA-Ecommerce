@@ -16,32 +16,28 @@ use App\Http\Controllers\Api\SliderController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user()->load('roles');
+
+    /* return response()->json(['user' => $request->user()->load('roles') , 'token' => $request->user()->token_name]); */
 });
 
-Route::middleware('api','admin')->group(function(){
+Route::middleware('auth:sanctum','admin')->group(function(){
     Route::get("/products/create" , [ProductController::class , 'create']);
     Route::get("/customer/cart" , [ApiCart::class , 'customerCart']);
     Route::post("/order/confirm" , [OrderController::class , 'confirm']);
     Route::get("/customer/orders" , [OrderController::class , 'customerOrders']);
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
     Route::get('/admin/customers' , [UserController::class , 'customers']);
     Route::get('/admin/orders' , [OrderController::class , 'orders']);
     Route::get('/admin/orders/{order}',[OrderController::class , 'order']);
     Route::put('/admin/orders/{order}/status',[OrderController::class , 'updateStatus']);
     Route::get("/admin/info", [UserController::class , 'index']);
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 });
 
 Route::middleware(['api', 'customer'])->group(function () {
-
 Route::post('/customer/info', [UserController::class, 'customer_info']);
 Route::get('/customer/cart', [UserController::class, 'customerCart']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 
-});
-
-Route::post('/session', function () {
-    $session = session()->getId();
-    return response()->json(['message' => $session]);
 });
 
 //general routes
