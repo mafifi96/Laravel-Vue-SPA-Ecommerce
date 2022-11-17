@@ -150,8 +150,6 @@
 
                 </nav>
                 <!-- End of Topbar -->
-
-
                 <router-view></router-view>
 
             </div>
@@ -206,8 +204,7 @@
         },
         computed: {
             ...mapGetters({
-                AuthUser: 'user',
-                Token : 'token'
+                AuthUser: 'user'
             })
         },
         methods: {
@@ -217,9 +214,10 @@
             async logout() {
                 await axios.post('/api/logout').then(res => {
 
-                    window.axios.defaults.headers.common = {
-                        'Authorization': 'Bearer' + this.Token
-                    }
+                    /* window.axios.defaults.headers.common = {
+                        'Authorization': 'Bearer' + this.AuthUser.token
+                    } */
+                    console.log("done 1")
 
                     this.signout()
                     this.$router.push({

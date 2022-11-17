@@ -72,7 +72,7 @@
             Spinner
         },
         mounted() {
-            
+
                 this.getProduct();
         },
         methods: {
@@ -94,16 +94,6 @@
                     this.loading = false
                 })
 
-            },
-
-            async gPro(){
-               await axios.get(`api/products/${this.id}`).then(res =>{
-                    this.product = res.data.product
-                }).catch(err=>{
-
-                }).finally(()=>{
-                    this.loading = false
-                })
             },
             addToCart(e) {
 

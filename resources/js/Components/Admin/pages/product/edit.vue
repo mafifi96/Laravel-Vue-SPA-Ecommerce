@@ -41,9 +41,19 @@
                                     placeholder="title" required>
                             </div>
                             <div>
-                                <img class="img-thumbnail" style="display: block; width:100%;height:70%"
-                                    :src="'/storage/'+ product.images[0].image" :alt="product.title"
-                                    :title="product.title" id="cover">
+                                <template v-if="product.images?.length > 0">
+
+                                    <img class="img-thumbnail" style="display: block; width:100%;height:70%"
+                                        :src="'/storage/'+ product.images[0].image" :alt="product.title"
+                                        :title="product.title" id="cover">
+                                </template>
+                                <template v-else>
+
+                                    <img class="img-thumbnail" style="display: block; width:100%;height:70%"
+                                        src="/imgs/default-image.jpg" :alt="product.title" :title="product.title"
+                                        id="cover">
+                                </template>
+
                             </div>
                             <div class="form-group">
                                 <input type="file" name="image" class="form-control form-control-user"
@@ -82,7 +92,7 @@
                             <button :disabled="processing" @click.prevent="updateProduct()"
                                 class="btn btn-primary btn-user btn-block">
                                 {{ processing ? "Saving..." : "Save" }}
-                                <img v-show="processing" src="/storage/assets/ajax.gif" alt="loading">
+                                <img v-show="processing" src="/imgs/ajax.gif" alt="loading">
                             </button>
                         </form>
                     </div>
@@ -133,7 +143,7 @@
 
             },
             async getCategoriesAndBrands() {
-               await axios.get("/api/products/create").then(res => {
+                await axios.get("/api/products/create").then(res => {
 
                     this.categories = res.data.categories;
                     this.brands = res.data.brands;
@@ -154,20 +164,20 @@
 
                 let formData = new FormData();
 
-                for (let [key , value] of Object.entries(this.product)){
+                for (let [key, value] of Object.entries(this.product)) {
 
-                    formData.append(key,value)
+                    formData.append(key, value)
 
                 }
 
                 formData.append('_method', 'PATCH')
-                formData.append('_token', this.csrf)
+                //formData.append('_token', this.csrf)
 
                 await axios.post("/api/products/" + this.ID, formData, {
-                    headers : {
-                        'content-type' : 'multipart/form-data'
-                    }
-                })
+                        headers: {
+                            'content-type': 'multipart/form-data'
+                        }
+                    })
                     .then(res => {
 
                         this.saved = true
@@ -191,8 +201,9 @@
                     })
 
             },
-            async getProduct() {
-               await axios.get("/api/products/" + this.ID).then(res => {
+            async getProductForEdit() {
+                await axios.get("/api/products/" + this.ID).then(res => {
+
                     this.product = res.data.product
 
                     document.title = "Store | Edit - " + this.product.title
@@ -206,7 +217,7 @@
         },
         mounted() {
             this.getCategoriesAndBrands()
-            this.getProduct()
+            this.getProductForEdit()
             document.title = "Store | Product - Edit"
 
         }

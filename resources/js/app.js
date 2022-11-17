@@ -1,7 +1,5 @@
 require('./bootstrap');
 
-//import './assets'
-
 import {createApp} from 'vue'
 
 import App from './App'
@@ -9,9 +7,6 @@ import App from './App'
 import router from './routes'
 
 import store from './store'
-
-
-
 
 const app = createApp({
     components :{

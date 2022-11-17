@@ -48,7 +48,7 @@ const store = createStore({
 
                 commit('SET_USER', res.data)
                 commit('SET_AUTHENTICATED', true)
-                //commit('SET_TOKEN', res.data.token)
+                commit('SET_TOKEN', res.data.token)
 
             }).catch(err => {
 
@@ -60,6 +60,8 @@ const store = createStore({
         logout({commit}) {
             commit('SET_USER', {})
             commit('SET_AUTHENTICATED', false)
+            console.log("done 2")
+
         }
     },
     getters: {

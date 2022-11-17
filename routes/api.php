@@ -13,9 +13,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Api\CartController As ApiCart;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\SliderController;
+use Illuminate\Support\Arr;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user()->load('roles');
+   // return Arr::add($request->user()->load('roles'),'token', $request->user()->tokens[0]->token);
 
     /* return response()->json(['user' => $request->user()->load('roles') , 'token' => $request->user()->token_name]); */
 });
@@ -30,16 +32,14 @@ Route::middleware('auth:sanctum','admin')->group(function(){
     Route::get('/admin/orders/{order}',[OrderController::class , 'order']);
     Route::put('/admin/orders/{order}/status',[OrderController::class , 'updateStatus']);
     Route::get("/admin/info", [UserController::class , 'index']);
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 });
 
 Route::middleware(['api', 'customer'])->group(function () {
-Route::post('/customer/info', [UserController::class, 'customer_info']);
-Route::get('/customer/cart', [UserController::class, 'customerCart']);
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
-
+    Route::post('/customer/info', [UserController::class, 'customer_info']);
+    Route::get('/customer/cart', [UserController::class, 'customerCart']);
 });
 
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth:sanctum');
 //general routes
 Route::apiResource('products', ProductController::class);
 Route::apiResource('categories', CategoryController::class);

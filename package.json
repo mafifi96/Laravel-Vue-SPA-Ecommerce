@@ -24,6 +24,7 @@
     "dependencies": {
         "@popperjs/core": "^2.11.6",
         "@vue/compiler-sfc": "^3.2.37",
+        "core-js": "^3.26.1",
         "swiper": "^8.4.4",
         "vue": "^3.2.36",
         "vue-router": "^4.0.13",
