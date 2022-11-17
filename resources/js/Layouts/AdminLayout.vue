@@ -11,7 +11,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">Store <sup>1</sup></div>
             </router-link>
 
             <!-- Divider -->
@@ -65,7 +65,7 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <button  id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
 
@@ -93,13 +93,11 @@
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
+
+                            <div class="dropdown-menu dropdown-search dropdown-menu-right p-3 shadow animated--grow-in show" aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
@@ -114,9 +112,10 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" @click.prevent="dropdownToggle()" id="userDropdown" role="button" data-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle" @click.prevent="dropdownToggle()" id="userDropdown"
+                                role="button" data-toggle="dropdown">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ AuthUser.name }}</span>
-                                <img class="img-profile rounded-circle" src="/storage/assets/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="/imgs/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -151,8 +150,6 @@
 
                 </nav>
                 <!-- End of Topbar -->
-
-
                 <router-view></router-view>
 
             </div>
@@ -161,19 +158,32 @@
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 ">
+                            <ul class="list-style-type-none d-flex justify-content-center p-0"
+                                style="list-style: none;">
+                                <li class="m-2"><a class="text-decoration-none font-size-2" style="color: #555"
+                                        href="https://www.facebook.com/silent.e3gle"><i
+                                            class="fab fa-facebook-f"></i></a></li>
+                                <li class="m-2"><a class="text-decoration-none font-size-2" style="color: #555"
+                                        href="https://github.com/mafifi96/"><i class="fab fa-github"></i></a></li>
+                                <li class="m-2"><a class="text-decoration-none font-size-2" style="color: #555"
+                                        href="https://www.linkedin.com/in/mafifi-fstack-dev/"><i
+                                            class="fab fa-linkedin"></i></a></li>
+                                <li class="m-2"><a class="text-decoration-none font-size-2" style="color: #555"
+                                        href="https://wa.me/+201093852164"><i class="fab fa-whatsapp"></i></a></li>
+                            </ul>
+                            <p class="text-center text-monospace text-capitalize py-2">developed by &commat;mohamed
+                                afifi</p>
+                        </div>
                     </div>
                 </div>
             </footer>
+
             <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
 
     </div>
 </template>
@@ -182,7 +192,9 @@
     import {
         mapActions
     } from 'vuex'
-    import {mapGetters} from 'vuex'
+    import {
+        mapGetters
+    } from 'vuex'
 
     export default {
         data: function () {
@@ -190,32 +202,46 @@
 
             }
         },
-        computed : {
+        computed: {
             ...mapGetters({
-                AuthUser : 'user'
+                AuthUser: 'user'
             })
-        }
-        ,
+        },
         methods: {
             ...mapActions({
                 signout: 'logout'
             }),
             async logout() {
                 await axios.post('/api/logout').then(res => {
-                    //window.axios.defaults.headers.common = {'Authorization': ''}
+
+                    /* window.axios.defaults.headers.common = {
+                        'Authorization': 'Bearer' + this.AuthUser.token
+                    } */
+                    console.log("done 1")
+
                     this.signout()
                     this.$router.push({
                         name: "login"
                     })
-                }).catch(err=>{
+                }).catch(err => {
                     console.log(err)
                 })
             },
-            dropdownToggle(){
+            dropdownToggle() {
 
                 $(".dropdown-menu").slideToggle();
 
             }
+
+        },
+        mounted()
+        {
+
+            $("#searchDropdown").click(function(e){
+                e.preventDefault();
+                $(".dropdown-search").toggleClass("show");
+            });
+            !function(l){"use strict";l("#sidebarToggle, #sidebarToggleTop").on("click",function(e){l("body").toggleClass("sidebar-toggled"),l(".sidebar").toggleClass("toggled"),l(".sidebar").hasClass("toggled")&&l(".sidebar .collapse").collapse("hide")}),l(window).resize(function(){l(window).width()<768&&l(".sidebar .collapse").collapse("hide"),l(window).width()<480&&!l(".sidebar").hasClass("toggled")&&(l("body").addClass("sidebar-toggled"),l(".sidebar").addClass("toggled"),l(".sidebar .collapse").collapse("hide"))}),l("body.fixed-nav .sidebar").on("mousewheel DOMMouseScroll wheel",function(e){var o;768<l(window).width()&&(o=(o=e.originalEvent).wheelDelta||-o.detail,this.scrollTop+=30*(o<0?1:-1),e.preventDefault())}),l(document).on("scroll",function(){100<l(this).scrollTop()?l(".scroll-to-top").fadeIn():l(".scroll-to-top").fadeOut()}),l(document).on("click","a.scroll-to-top",function(e){var o=l(this);l("html, body").stop().animate({scrollTop:l(o.attr("href")).offset().top},1e3,"easeInOutExpo"),e.preventDefault()})}(jQuery);
         }
 
     }

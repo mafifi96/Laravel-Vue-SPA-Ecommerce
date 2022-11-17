@@ -98,7 +98,6 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        //return response()->json(dd($request->all()));
 
         if (! $request->validated()) {
             return response()->json(['errors' => $request->errors()]);
@@ -115,7 +114,7 @@ class ProductController extends Controller
 
             $file_name = $request->file('image')->storePublicly('public/covers');
 
-            $image = $product->images()->update(['image' => str_replace('public/','',$file_name)]);
+            $image = $product->images()->updateOrCreate(['image' => str_replace('public/','',$file_name)]);
 
         }
         return response()->json(['message' => "Product Updated"], 201);

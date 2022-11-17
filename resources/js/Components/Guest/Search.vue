@@ -2,21 +2,22 @@
     <div class="col-md-10 col-lg-10 col-sm-12 ">
         <div class="container">
             <div class="row">
-            <Spinner v-show="loading"></Spinner>
+                <Spinner v-show="loading"></Spinner>
                 <!-- Products -->
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="row">
                         <h6 class="text-center mb-2">Searching For : <strong>{{ name }}</strong> Results Found :
-                            <strong>{{ products.length }}</strong></h6>
-                        <div class="col-md-12 col-sm-12 col-lg-6 mb-3 " v-for=" product in products" :key="product.id">
+                            <strong>{{ S_products?.length }}</strong></h6>
+                        <div class="col-md-12 col-sm-12 col-lg-6 mb-3 " v-for=" product in S_products"
+                            :key="product.id">
                             <div class="product mb-2 shadow-sm j">
                                 <div class="pro-header mb-1">
-                                    <router-link :to="{ name :'product', params : {id : product.id } }">
+                                    <!--                                     <router-link :to="{ name :'product', params : {id : product.id } }">
                                         <img :src="'/storage/'+ product.images[0].image" style="height:40vh;"
                                             class="img-fluid card-img-top" alt="placeholder">
 
                                     </router-link>
-
+ -->
                                 </div>
 
                                 <div class="pro-body mb-1 p-2">
@@ -69,28 +70,29 @@
 
 <script>
 
-import Spinner from '../inc/Spinner'
+    import Spinner from '../inc/Spinner'
 
     export default {
 
         data() {
             return {
-                products: [],
+                S_products: [],
                 name: this.$route.query.q,
-                loading : true
+                loading: true
             }
         },
-        components :{
+        components: {
             Spinner
+        },
+        mounted() {
+            this.getSearchProducts()
         },
         methods: {
 
-            getProducts() {
+            getSearchProducts() {
                 axios.get("/api/search?q=" + this.name).then(res => {
-
-                    this.products = res.data;
+                    this.S_products = res.data;
                     this.loading = false
-
                 }).catch(err => {
                     console.log(err)
                 })
@@ -133,14 +135,13 @@ import Spinner from '../inc/Spinner'
         },
         watch: {
             $route(to, from) {
-                this.name = this.$route.query.q
-                this.getProducts()
-                document.title = "Store | " + this.name
+                if (to.name == 'search') {
+                    this.name = this.$route.query.q
+                    this.getSearchProducts()
+                    document.title = "Store | " + this.name
+
+                }
             }
-        },
-        created() {
-            this.getProducts();
-            document.title = "Store | " + this.name
         }
     }
 

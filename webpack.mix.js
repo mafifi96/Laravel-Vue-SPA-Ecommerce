@@ -13,14 +13,26 @@ const webpack = require('webpack')
  |
  */
 
- mix.webpackConfig ({
+mix.webpackConfig({
     plugins: [
-      new webpack.DefinePlugin({
-        __VUE_OPTIONS_API__: true,
-        __VUE_PROD_DEVTOOLS__: false,
-      }),
+        new webpack.DefinePlugin({
+            __VUE_OPTIONS_API__: true,
+            __VUE_PROD_DEVTOOLS__: false,
+        }),
     ],
-  })
+})
+mix.options({
+    postCss: [
+        require('postcss-custom-properties')
+    ]
+});
 
 
-mix.js('resources/js/app.js', 'public/js').vue();
+mix.js([
+    'resources/assets/js/bootstrap.min.js',
+    'resources/assets/js/sb-admin-2.min.js',
+    'resources/assets/js/fontawesome.min.js',
+    'resources/js/app.js'
+], 'public/js/app.js').vue()
+
+mix.styles('resources/css/*.css', 'public/css/app.css')

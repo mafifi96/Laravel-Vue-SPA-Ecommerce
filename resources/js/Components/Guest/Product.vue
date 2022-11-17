@@ -1,61 +1,58 @@
 <template>
 
-            <div class="row ">
-                <Spinner v-show="loading"></Spinner>
-                <!-- Product -->
-                <div class="col-md-12 col-sm-12 col-lg-12  ">
+    <div class="row ">
+        <Spinner v-show="loading"></Spinner>
+        <!-- Product -->
+        <div class="col-md-12 col-sm-12 col-lg-12  ">
 
-                    <div class="product jusitfy-content-center">
-                        <div class="pro-header mb-1">
-                            <div class="pro-img" style="width: 100%;height:80vh;overflow:hidden;">
-                                <img :src="'/storage/'+ product.images[0].image" class="img-fluid "
-                                    style="width:100%;display:block;" :alt=product.title :title=product.title>
-                            </div>
-                        </div>
-                        <div class="pro-body mb-1 p-2">
-                            <h2 class="text-capitalize" :title=product.title>
-                                {{ product.title }}
-                            </h2>
-                            <p style="font-weight:800;color:#000;">&dollar;{{ product.price }}</p>
-                            <p style="font-weight:400;color:#000;">Brand -
-                                <router-link
-                                    :to="{name : 'brand', params : {id : product.brand.id , name : product.brand.name}}">
-                                    {{ product.brand.name }}</router-link>
-                            </p>
+            <div class="product jusitfy-content-center">
+                <div class="pro-header mb-1">
+                    <div class="pro-img bg-light" style="width: 100%;height:80vh;overflow:hidden;">
+                        <!-- <img :src="'/storage/'+ product.images[0].image" class="img-fluid "
+                                    style="width:100%;display:block;" :alt=product.title :title=product.title> -->
+                    </div>
+                </div>
+                <div class="pro-body mb-1 p-2">
+                    <h2 class="text-capitalize" :title=product.title>
+                        {{ product.title }}
+                    </h2>
+                    <p style="font-weight:800;color:#000;">&dollar;{{ product.price }}</p>
+                    <!-- <p style="font-weight:400;color:#000;">Brand -
+                        <router-link
+                            :to="{name : 'brand', params : {id : product.brand.id , name : product.brand.name}}">
+                            {{ product.brand.name }}</router-link>
+                    </p>
+ -->
 
+                    <div class="pro-desc p-2" v-html="product.description">
+                    </div>
 
-                            <div class="pro-desc p-2" v-html="product.description">
-                            </div>
-
-                            <div class="pro-add">
-                                <form method="post" name="add">
-                                    <div class="row">
-                                        <div class="col-md-8 justify-content-">
-                                            <div class="form-group">
-                                                <input type="number" class="form-control" name="quantity" value=""
-                                                    :placeholder="'in stock ' + product.quantity "
-                                                    :max=product.quantity>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-2 pull-right">
-                                            <button @click.prevent="addToCart($event)" :data-title=product.title
-                                                :data-price=product.price :data-id=product.id
-                                                class="btn btn-primary addtocart" name="submit">Add</button>
-                                        </div>
+                    <div class="pro-add">
+                        <form method="post" name="add">
+                            <div class="row">
+                                <div class="col-md-8 justify-content-">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" name="quantity" value=""
+                                            :placeholder="'in stock ' + product.quantity " :max=product.quantity>
                                     </div>
-                                </form>
+                                </div>
 
+                                <div class="col-md-2 pull-right">
+                                    <button @click.prevent="addToCart($event)" :data-title=product.title
+                                        :data-price=product.price :data-id=product.id class="btn btn-primary addtocart"
+                                        name="submit">Add</button>
+                                </div>
                             </div>
+                        </form>
 
-                        </div>
                     </div>
 
                 </div>
-
             </div>
 
+        </div>
 
+    </div>
 
 </template>
 
@@ -66,9 +63,7 @@
 
         data: function () {
             return {
-                product: {
-                    type : Object
-                },
+                product: {},
                 id: this.$route.params.id,
                 loading: true
             }
@@ -78,11 +73,12 @@
         },
         mounted() {
 
-this.getProduct()
-},
+                this.getProduct();
+        },
         methods: {
-           async getProduct() {
-                await axios.get("/api/products/" + this.id).then(res => {
+
+             getProduct() {
+                 axios.get("/api/products/" + this.id).then(res => {
 
                     this.product = res.data.product
                     console.log("fetched")
@@ -92,9 +88,9 @@ this.getProduct()
                     console.log(err)
                     console.log("error")
                     this.$router.push({
-                        name : '404'
+                        name: '404'
                     })
-                }).finally(()=>{
+                }).finally(() => {
                     this.loading = false
                 })
 
@@ -136,6 +132,3 @@ this.getProduct()
     }
 
 </script>
-<style scoped>
-
-</style>>

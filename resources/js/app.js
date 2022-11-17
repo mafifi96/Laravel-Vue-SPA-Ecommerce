@@ -8,9 +8,6 @@ import router from './routes'
 
 import store from './store'
 
-
-
-
 const app = createApp({
     components :{
         App

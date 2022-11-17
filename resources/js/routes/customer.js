@@ -4,7 +4,7 @@ import Orders from '../Components/Customer/orders'
 const routes = [
     {
         path : '/customer',
-        name : 'customer',
+        name : 'profile',
         component : Profile,
         meta : {
             middleware : "customer",

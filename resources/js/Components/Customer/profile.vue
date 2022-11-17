@@ -88,8 +88,8 @@ export default {
         },
 
         methods: {
-            getCartProducts() {
-                axios.get("/api/customer/cart").then(res => {
+           async  getCartProducts() {
+               await axios.get("/api/customer/cart").then(res => {
                     if (!res.data.Products.length) {
                         this.emptyCart = true
                     }
@@ -106,7 +106,7 @@ export default {
             },
              confirm (){
                  this.processing = true
-                 axios.post("api/order/confirm").then(res=>{
+                 axios.post("/api/order/confirm").then(res=>{
                      if(res.data.status){
                          this.confirmed = true
                          this.message = res.data.message
@@ -124,10 +124,8 @@ export default {
             }
 
         },
-        created() {
-            this.getCartProducts()
-        },
         mounted(){
+            this.getCartProducts()
             document.title = "Store | Profile"
         }
 

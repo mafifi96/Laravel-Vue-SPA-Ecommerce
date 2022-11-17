@@ -87,7 +87,6 @@
                     email: '',
                     password: '',
                 },
-                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 processing: false
             }
         },
@@ -115,7 +114,7 @@
 
                 } else if (this.$store.getters.isCustomer) {
                     this.$router.push({
-                        name: 'customer'
+                        name: 'profile'
                     })
                 }
             }

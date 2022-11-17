@@ -3,7 +3,6 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white text-dark shadow-sm">
         <div class="container-fluid">
 
-
             <router-link class="nav-link text-dark fw-bold" :to="{name : 'home' }">Store</router-link>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
@@ -13,7 +12,7 @@
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll " style="--bs-scroll-height: 100px;">
                     <li class="nav-item">
-                        <!-- <a class="nav-link " aria-current="page" href="/">Home</a> -->
+
                         <router-link :to="{ name: 'home' }" class="nav-link text-dark">Home</router-link>
                     </li>
 
@@ -27,7 +26,7 @@
 
                     <template v-if=" Authenticated && isCustomer">
                         <li class="nav-item">
-                            <router-link class="nav-link text-dark" :to="{name : 'customer'}">Profile</router-link>
+                            <router-link class="nav-link text-dark" :to="{name : 'profile'}">Profile</router-link>
                         </li>
                     </template>
                     <template v-if="!Authenticated">
@@ -110,8 +109,3 @@
     }
 
 </script>
-
-
-<style scoped>
-
-</style>

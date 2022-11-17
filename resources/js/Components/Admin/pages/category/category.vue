@@ -54,7 +54,7 @@
                 axios.get("/api/categories/" + this.Id).then(res => {
 
                     this.category = res.data;
-                    document.title = "Store | "+ this.category.name
+                    document.title = "Store | " + this.category.name
 
                 }).catch(err => {
                     alert(err)
@@ -64,8 +64,10 @@
         },
         watch: {
             $route(to, from) {
-                this.Id = this.$route.params.id
-                this.getCategory()
+                if (to.name == 'admin.category') {
+                    this.Id = this.$route.params.id
+                    this.getCategory()
+                }
             }
         },
         mounted() {

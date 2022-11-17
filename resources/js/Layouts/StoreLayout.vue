@@ -1,6 +1,4 @@
 <template>
-    <KeepAlive>
-    <div>
         <Nav></Nav>
         <main class="mt-5 mb-5 px-3" style="overflow:hidden;">
             <div class="container-fluid">
@@ -9,22 +7,29 @@
                         <Categories></Categories>
                     </div>
                     <div class="col-lg-9 col-md-9 mb-5 ">
-                        <div v-if="this.$route.name == 'home'" class="shadow">
-                        <slider></slider>
+                         <template v-if="checkRoute">
+                            <div class="shadow">
+                                <!-- <slider></slider>
+                                 -->
+                            </div>
+                        </template>
+                        <template v-else>
+                            <router-view></router-view>
+                        </template> 
+                        
+                    </div>
+                </div>
+                 <template v-if="checkRoute">
+                    <div class="row ">
+                        <div class="content col-lg-12 col-md-12 col-sm-12 mb-3">
+                            <router-view></router-view>
                         </div>
-                        <router-view v-else></router-view>
                     </div>
-                </div>
-                <div v-if="this.$route.name == 'home'"  class="row ">
-                    <div class="content col-lg-12 col-md-12 col-sm-12 mb-3">
-                        <router-view></router-view>
-                    </div>
-                </div>
+                </template>
             </div>
         </main>
         <Footer></Footer>
-    </div>
-</KeepAlive>
+    
 </template>
 
 <script>
@@ -39,6 +44,11 @@
             Categories,
             Footer,
             Slider
+        },
+        computed: {
+            checkRoute : function() {
+                return this.$route.name === 'home'
+            }
         }
 
     }

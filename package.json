@@ -17,15 +17,17 @@
         "lodash": "^4.17.19",
         "moment": "^2.29.3",
         "postcss": "^8.2.1",
+        "postcss-custom-properties": "^12.1.10",
         "postcss-import": "^12.0.1",
         "vue-loader": "^17.0.0"
     },
     "dependencies": {
+        "@popperjs/core": "^2.11.6",
         "@vue/compiler-sfc": "^3.2.37",
+        "core-js": "^3.26.1",
         "swiper": "^8.4.4",
         "vue": "^3.2.36",
         "vue-router": "^4.0.13",
-        "vueperslides": "^2.16.0",
         "vuex": "^4.0.2",
         "vuex-persistedstate": "^4.1.0"
     }

@@ -111,8 +111,7 @@
                 processing: false,
                 categories: [],
                 brands: [],
-                errors: null,
-                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                errors: null
             }
         },
         methods: {

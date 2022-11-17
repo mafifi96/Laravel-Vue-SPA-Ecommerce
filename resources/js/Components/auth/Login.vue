@@ -22,7 +22,7 @@
                                             </div>
 
                                             <form class="user" @submit.prevent="login" method="post">
-                                                <input type="hidden" name="_token" :value="csrf">
+
                                                 <div class="form-group">
                                                     <input type="email" class="form-control form-control-user"
                                                         v-model="creds.email" id="exampleInputEmail" name="email"
@@ -79,8 +79,6 @@
                     email: '',
                     password: '',
                 },
-                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-
                 processing: false
             }
         },
@@ -92,9 +90,7 @@
                 this.processing = true
                 await axios.get('/sanctum/csrf-cookie')
                 await axios.post('/api/login', this.creds).then(res => {
-
-                   // window.axios.defaults.headers.common = {'Authorization': `Bearer ${res.data.token}`}
-
+                   //window.axios.defaults.headers.common = {'Authorization': `Bearer ${res.data.token}`}
                     this.signIn()
 
                 }).catch(err => {

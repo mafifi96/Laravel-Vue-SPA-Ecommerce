@@ -12,8 +12,7 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h6 class="h4">Order Number <strong>{{order.id}}</strong> - Customer
-                            <strong>{{order.user.name}}</strong></h6>
+
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered">
@@ -27,8 +26,7 @@
                             <tr v-for="(product , index) in order.products" :key="product.id">
                                 <td>{{(index + 1)}}</td>
                                 <td>
-                                    <router-link :to="{name : 'product'  ,params :{ id :product.id}}">
-                                        {{product.title}}</router-link>
+
                                 </td>
                                 <td>{{product.pivot.quantity}}</td>
                                 <td>&dollar;{{currency(product.price)}}</td>
@@ -81,7 +79,7 @@ import moment from 'moment'
         },
         methods: {
             async getOrder() {
-                await axios.get("/api/admin/orders/" + this.ID).then(res => {
+                await axios.get("/api/admin/orders/" + this.$route.params.id).then(res => {
                     this.order = res.data.order
                     this.status = this.order.status
                 }).catch(err => {

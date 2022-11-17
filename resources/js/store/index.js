@@ -10,7 +10,8 @@ const store = createStore({
     return {
         CartQuantity: 0,
         authenticated: false,
-        user: {}
+        user: {},
+        token: ''
     }},
     mutations: {
 
@@ -22,6 +23,9 @@ const store = createStore({
         },
         SET_USER(state, payload) {
             state.user = payload
+        },
+        SET_TOKEN(state,payload){
+            state.token = payload
         }
 
     },
@@ -44,6 +48,7 @@ const store = createStore({
 
                 commit('SET_USER', res.data)
                 commit('SET_AUTHENTICATED', true)
+                commit('SET_TOKEN', res.data.token)
 
             }).catch(err => {
 
@@ -55,6 +60,8 @@ const store = createStore({
         logout({commit}) {
             commit('SET_USER', {})
             commit('SET_AUTHENTICATED', false)
+            console.log("done 2")
+
         }
     },
     getters: {
@@ -78,6 +85,9 @@ const store = createStore({
             return state.user.roles[0].name == "customer" ? true : false;
             }
             return false
+        },
+        token(state){
+            return state.token
         }
     }
 })
