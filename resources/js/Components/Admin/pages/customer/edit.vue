@@ -84,7 +84,8 @@ import Errors from '../../../inc/ValidationErrors.vue'
                 saved: false,
                 message: null,
                 processing: false,
-                errors: null
+                errors: null,
+                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             }
         },
         methods: {
