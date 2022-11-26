@@ -33,6 +33,7 @@
                                         <router-link :to="{name :'admin.orders.order', params :{id : order.id}}">
                                             {{order.id}}
                                         </router-link>
+
                                     </td>
                                     <td>{{order.status}}</td>
                                     <td>&dollar;{{currency(order.total_price) }}</td>

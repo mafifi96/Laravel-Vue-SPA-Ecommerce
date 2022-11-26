@@ -1,14 +1,11 @@
 <template>
 <div>
-
         <!-- Begin Page Content -->
         <div class="container-fluid">
             <!-- Page header -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">customers</h1>
-                <router-link :to="{name : 'admin.customers.create'}"
-                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm "></i>
-                    Create customer</router-link>
+
             </div>
 
             <!-- Content Row -->
@@ -38,7 +35,7 @@
                                     <tr v-for="(customer , index) in customers" :key="index">
                                         <td scope="row">{{(index + 1)}}</td>
                                         <td>
-                                            <router-link :to="{name : 'admin.customers' , params : {id : customer.id}}">
+                                            <router-link :to="{name : 'admin.customers.customer' , params : {id : customer.id}}">
                                                 {{customer.name}}</router-link>
                                         </td>
                                         <td>{{customer.phone ?? 'Not Provided'}}</td>
@@ -48,16 +45,17 @@
 
                                         <td>
                                             <div class="btn-group">
-                                            <router-link
+                                            <!-- <router-link
                                                     :to="{name : 'admin.customers.orders.create', params : {cid : customer.id }}"
                                                     class="btn btn-info">
                                                     <i class="fas fa-plus"></i>
                                                 </router-link>
                                                 <router-link
-                                                    :to="{name : 'admin.customers.edit', params : {cid : customer.id}}"
-                                                    class="btn btn-primary">
-                                                    <i class="fas fa-edit"></i>
-                                                </router-link>
+                                                :to="{name : 'admin.customers.edit', params : {cid : customer.id}}"
+                                                class="btn btn-primary">
+                                                <i class="fas fa-edit"></i>
+                                            </router-link>
+                                        -->
                                                 <a @click.prevent="warning($event)" :data-id="customer.id"
                                                     class="btn btn-danger "><i class="fas fa-trash"></i>
                                                 </a>
@@ -86,12 +84,12 @@ import moment from 'moment'
 
 export default {
     data : () => ({
-        customers : {},
+        customers : [],
         _id : null
     }),
     methods: {
-            getcustomers() {
-                axios.get("/api/customers").then(res => {
+            async getcustomers() {
+               await axios.get("/api/customers").then(res => {
 
                     this.customers = res.data.customers;
 

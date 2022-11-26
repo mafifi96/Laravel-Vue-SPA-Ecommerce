@@ -27,7 +27,8 @@ Route::middleware('auth:sanctum','admin')->group(function(){
     Route::get("/customer/cart" , [ApiCart::class , 'customerCart']);
     Route::post("/order/confirm" , [OrderController::class , 'confirm']);
     Route::get("/customer/orders" , [OrderController::class , 'customerOrders']);
-    Route::get('/admin/customers' , [UserController::class , 'customers']);
+    Route::get('/customers' , [UserController::class , 'customers']);
+    Route::get('/customers/{id}' , [UserController::class , 'customer']);
     Route::get('/admin/orders' , [OrderController::class , 'orders']);
     Route::get('/admin/orders/{order}',[OrderController::class , 'order']);
     Route::put('/admin/orders/{order}/status',[OrderController::class , 'updateStatus']);

@@ -9,9 +9,9 @@
 
     <script src="{{asset('js/jquery-3.6.0.js')}}"></script>
     <link rel="stylesheet" href="{{mix('css/app.css')}}">
-
+<!--
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+ -->
     <title>Store</title>
 
 </head>

@@ -29,9 +29,8 @@
                                     <th scope="col">Last Update</th>
                                 </tr>
                             </thead>
+                            <KeepAlive>
                             <tbody>
-
-
                                 <tr v-for="(category, index) in categories" :key="category.id">
                                     <th scope="row">{{ (index + 1)}}</th>
                                     <td>
@@ -43,6 +42,7 @@
                                 </tr>
 
                             </tbody>
+                        </KeepAlive>
                         </table>
                     </div>
                 </div>

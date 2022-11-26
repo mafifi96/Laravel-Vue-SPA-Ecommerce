@@ -31,3 +31,20 @@ router.beforeEach((to,from,next)=>{
     }
 next()
 })
+
+window.axios.interceptors.response.use(function (response) {
+
+    return response;
+  }, function (error) {
+
+    if(error.response.status == 401 || error.response.status == 409){
+
+        //window.localStorage.clear()
+        this.store.actions.logout()
+
+
+    }
+
+    return Promise.reject(error);
+  });
+

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Product_images;
 use App\Models\Category;
 use App\Models\ProductBrand;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 
 class Product extends Model
@@ -15,6 +16,9 @@ class Product extends Model
 
     protected $table = 'products';
 
+    //protected $hidden = ['brand_id' ,'brand'];
+
+    //protected $appends = ['cover'];
 
     protected $guarded = [];
 
@@ -44,6 +48,13 @@ class Product extends Model
     public function cart()
     {
         return $this->belongsTo(Cart::class);
+    }
+
+    protected function cover(): Attribute
+    {
+        return new Attribute(
+            get : fn () => $this->images[0]->image,
+        );
     }
 
 }

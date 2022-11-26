@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <div class="row overflow-hidden justify-content-between">
                     <div class="col-lg-3 col-md-9 mb-5">
-                        <Categories></Categories>
+                         <Categories></Categories>
                     </div>
                     <div class="col-lg-9 col-md-9 mb-5 ">
                          <template v-if="checkRoute">

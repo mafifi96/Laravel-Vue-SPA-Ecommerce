@@ -47,6 +47,7 @@
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
+                                <KeepAlive>
                                 <tbody>
 
                                     <tr v-for="(product , index) in products" :key="index">
@@ -81,6 +82,7 @@
                                     </tr>
 
                                 </tbody>
+                            </KeepAlive>
                             </table>
                         </div>
                     </div>

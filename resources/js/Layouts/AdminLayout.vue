@@ -190,11 +190,9 @@
 
 <script>
     import {
-        mapActions
+        mapActions,mapGetters
     } from 'vuex'
-    import {
-        mapGetters
-    } from 'vuex'
+
 
     export default {
         data: function () {
@@ -213,12 +211,6 @@
             }),
             async logout() {
                 await axios.post('/api/logout').then(res => {
-
-                    /* window.axios.defaults.headers.common = {
-                        'Authorization': 'Bearer' + this.AuthUser.token
-                    } */
-                    console.log("done 1")
-
                     this.signout()
                     this.$router.push({
                         name: "login"
