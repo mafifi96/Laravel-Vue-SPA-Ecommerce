@@ -60,7 +60,6 @@ const store = createStore({
         logout({commit}) {
             commit('SET_USER', {})
             commit('SET_AUTHENTICATED', false)
-            console.log("done 2")
 
         }
     },

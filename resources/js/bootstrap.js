@@ -16,10 +16,8 @@ window.axios.defaults.withCredentials = true;
     if(error.response.status == 401 || error.response.status == 409){
 
         window.localStorage.clear()
-        //window.location = "/login"
-        this.router.push({
-            name : 'login'
-        })
+        window.location = "/login"
+
     }
 
     return Promise.reject(error);

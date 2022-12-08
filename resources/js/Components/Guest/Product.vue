@@ -10,7 +10,22 @@
                     <div class="pro-img bg-light" style="width: 100%;height:80vh;overflow:hidden;">
                         <!-- <img :src="'/storage/'+ product.images[0].image" class="img-fluid "
                                     style="width:100%;display:block;" :alt=product.title :title=product.title> -->
+
+                    <template v-if="product.images?.length">
+                        <img :src="'/storage/'+ product.images[0].image" class="img-fluid "
+                                    style="width:100%;display:block;" :alt=product.title :title=product.title>
+                        </template>
+
+                        <template v-else>
+
+                            <img class="img-thumbnail" style="display: block; width:100%;height:100%;"
+                                src="/imgs/default-image.jpg" :alt="product.title" :title="product.title">
+
+                        </template>
+
                     </div>
+
+
                 </div>
                 <div class="pro-body mb-1 p-2">
                     <h2 class="text-capitalize" :title=product.title>
@@ -81,8 +96,6 @@
                  axios.get("/api/products/" + this.id).then(res => {
 
                     this.product = res.data.product
-                    console.log("fetched")
-                    console.log(res.data.product)
 
                 }).catch(err => {
                     console.log(err)

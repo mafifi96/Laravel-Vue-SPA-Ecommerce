@@ -16,14 +16,9 @@
             AdminLayout,
             CustomerLayout
         },
-        data: function () {
-            return {
-                DefaultLayout: "StoreLayout"
-            }
-        },
         computed: {
             layout() {
-                return this.$route.meta.layout ? this.$route.meta.layout : this.DefaultLayout
+                return this.$route.meta.layout
             }
         }
 

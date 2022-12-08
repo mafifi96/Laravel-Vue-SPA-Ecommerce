@@ -85,6 +85,7 @@
 
                         </template>
 
+
                     </div>
 
                     <div v-html="state.product.description" class="body mt-3"></div>

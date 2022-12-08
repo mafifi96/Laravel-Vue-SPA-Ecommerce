@@ -93,11 +93,8 @@
             },
             getCartQuantity() {
 
-            console.log("getting quantity - ")
-
             this.$store.dispatch('Quantity')
 
-            console.log("quantity loaded - ")
             }
 
         },

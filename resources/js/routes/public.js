@@ -24,53 +24,83 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: Home
+        component: Home,
+        meta : {
+            layout : 'StoreLayout'
+        }
     },
     {
         path: '/product/:id(\\d+)',
         name : 'product',
-        component : Product
+        component : Product,
+        meta : {
+            layout : 'StoreLayout'
+        }
     },
     {
         path: '/category/:id(\\d+)/:name(\\w+)',
         name : 'category',
-        component : Category
+        component : Category,
+        meta : {
+            layout : 'StoreLayout'
+        }
     },
     {
         path: '/brand/:id(\\d+)/:name(\\w+)',
         name : 'brand',
-        component : Brand
+        component : Brand,
+        meta : {
+            layout : 'StoreLayout'
+        }
     },
     {
         path: '/search',
         name : 'search',
-        component : Search
+        component : Search,
+        meta : {
+            layout : 'StoreLayout'
+        }
     },
     {
         path: '/login',
         name:'login',
         component: Login,
+        meta : {
+            layout : 'StoreLayout'
+        }
     },
     {
         path: '/register',
         name: 'register',
         component: Register,
+        meta : {
+            layout : 'StoreLayout'
+        }
     }
     ,
     {
         path: '/forgot-password',
         name: 'forgot-password',
         component: ForgotPassword,
+        meta : {
+            layout : 'StoreLayout'
+        }
     },
     {
         path: '/cart',
         name: 'cart',
         component: Cart,
+        meta : {
+            layout : 'StoreLayout'
+        }
     },
     {
         path: '/checkout',
         name: 'checkout',
         component: Checkout,
+        meta : {
+            layout : 'StoreLayout'
+        }
     }
 ];
 

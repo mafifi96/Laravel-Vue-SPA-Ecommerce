@@ -12,12 +12,19 @@
                             :key="product.id">
                             <div class="product mb-2 shadow-sm j">
                                 <div class="pro-header mb-1">
-                                    <!--                                     <router-link :to="{ name :'product', params : {id : product.id } }">
-                                        <img :src="'/storage/'+ product.images[0].image" style="height:40vh;"
-                                            class="img-fluid card-img-top" alt="placeholder">
+                                    <router-link :to="{ name :'product', params : {id : product.id } }">
+                                        <template v-if="product.images?.length != 0">
 
+                                            <img :src="'/storage/'+ product.images[0].image" style="height:40vh;"
+                                                class="img-fluid card-img-top" alt="placeholder">
+                                        </template>
+
+                                        <template v-else>
+                                            <img src="/imgs/default-image.jpg" style="height:40vh;"
+                                                class="img-fluid card-img-top" alt="placeholder">
+                                        </template>
                                     </router-link>
- -->
+
                                 </div>
 
                                 <div class="pro-body mb-1 p-2">
@@ -69,7 +76,6 @@
 </template>
 
 <script>
-
     import Spinner from '../inc/Spinner'
 
     export default {

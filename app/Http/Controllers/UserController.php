@@ -70,9 +70,21 @@ class UserController extends Controller
 
     public function customers()
     {
-        $customers = User::whereNotIn('id' , [Auth::id()])->get();
 
-        return view("admin.layouts.customer.customers" , ['customers' => $customers]);
+        $customers = User::whereHas('roles' , function($query){
+            $query->where('name' ,'customer');
+        })->get();
+
+        return response()->json(['customers' => $customers]);
+    }
+
+    public function customer($id)
+    {
+        $customer = User::findOrFail($id);
+
+        $customer->load('orders');
+
+        return response()->json(['customer' => $customer]);
     }
 
 
