@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return response()->json(Product::with('images', 'category')->get());
+        return response()->json(Product::with('images', 'category')->paginate(5));
     }
 
     /**
