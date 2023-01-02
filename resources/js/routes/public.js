@@ -30,6 +30,15 @@ const routes = [
         }
     },
     {
+        path: '/products/page/:id(\\d+)',
+        name: 'products',
+        component: Home,
+        meta : {
+            layout : 'StoreLayout'
+        }
+    },
+
+    {
         path: '/product/:id(\\d+)',
         name : 'product',
         component : Product,
